@@ -2,6 +2,8 @@ const gameBoard = document.getElementById('game-board');
 const scoreDisplay = document.getElementById('score');
 const movesDisplay = document.getElementById('moves');
 const restartButton = document.getElementById('restart');
+const flipSound = document.getElementById('flipSound');
+const matchSound = document.getElementById('matchSound');
 
 const cardBackImage = 'card-back.jpg';
 const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
@@ -38,6 +40,7 @@ function flipCard() {
         this.classList.add('flipped');
         this.style.backgroundImage = `url('/static/images/${cards[this.dataset.index]}')`;
         flippedCards.push(this);
+        flipSound.play();
 
         if (flippedCards.length === 2) {
             moves++;
@@ -54,6 +57,7 @@ function checkMatch() {
         scoreDisplay.textContent = `配對成功: ${score}`;
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
+        matchSound.play();
         if (score === totalCards / 2) {
             alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
         }
