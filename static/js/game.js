@@ -47,7 +47,7 @@ function flipCard() {
         this.style.backgroundImage = `url('/static/images/${cards[this.dataset.index]}')`;
         flippedCards.push(this);
         console.log('Playing flip sound');
-        flipSound.play();
+        if (flipSound) flipSound.play();
 
         if (flippedCards.length === 2) {
             moves++;
@@ -65,7 +65,7 @@ function checkMatch() {
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         console.log('Playing match sound');
-        matchSound.play();
+        if (matchSound) matchSound.play();
         if (score === totalCards / 2) {
             alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
         }
@@ -76,7 +76,7 @@ function checkMatch() {
             card1.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
             card2.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
             console.log('Playing mismatch sound');
-            mismatchSound.play();
+            if (mismatchSound) mismatchSound.play();
         }, 500);
     }
     flippedCards = [];
@@ -84,7 +84,7 @@ function checkMatch() {
 
 function restartGame() {
     console.log('Playing restart sound');
-    restartSound.play();
+    if (restartSound) restartSound.play();
     score = 0;
     moves = 0;
     scoreDisplay.textContent = '配對成功: 0';
@@ -92,10 +92,10 @@ function restartGame() {
     createBoard();
 }
 
-flipSound.onerror = () => console.error('Error loading flip sound');
-matchSound.onerror = () => console.error('Error loading match sound');
-mismatchSound.onerror = () => console.error('Error loading mismatch sound');
-restartSound.onerror = () => console.error('Error loading restart sound');
+if (flipSound) flipSound.onerror = () => console.error('Error loading flip sound');
+if (matchSound) matchSound.onerror = () => console.error('Error loading match sound');
+if (mismatchSound) mismatchSound.onerror = () => console.error('Error loading mismatch sound');
+if (restartSound) restartSound.onerror = () => console.error('Error loading restart sound');
 
 restartButton.addEventListener('click', restartGame);
 preloadImages();
