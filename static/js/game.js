@@ -21,6 +21,9 @@ function preloadImages() {
         const img = new Image();
         img.src = `/static/images/${image}`;
     });
+    console.log('Loading audio:', '/static/audio/card-flip.mp3');
+    console.log('Loading audio:', '/static/audio/card-match.mp3');
+    console.log('Loading audio:', '/static/audio/card-mismatch.mp3');
 }
 
 function createBoard() {
@@ -41,6 +44,7 @@ function flipCard() {
         this.classList.add('flipped');
         this.style.backgroundImage = `url('/static/images/${cards[this.dataset.index]}')`;
         flippedCards.push(this);
+        console.log('Playing flip sound');
         flipSound.play();
 
         if (flippedCards.length === 2) {
@@ -58,6 +62,7 @@ function checkMatch() {
         scoreDisplay.textContent = `配對成功: ${score}`;
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
+        console.log('Playing match sound');
         matchSound.play();
         if (score === totalCards / 2) {
             alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
@@ -68,6 +73,7 @@ function checkMatch() {
             card2.classList.remove('flipped');
             card1.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
             card2.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
+            console.log('Playing mismatch sound');
             mismatchSound.play();
         }, 500);
     }
@@ -81,6 +87,10 @@ function restartGame() {
     movesDisplay.textContent = '移動次數: 0';
     createBoard();
 }
+
+flipSound.onerror = () => console.error('Error loading flip sound');
+matchSound.onerror = () => console.error('Error loading match sound');
+mismatchSound.onerror = () => console.error('Error loading mismatch sound');
 
 restartButton.addEventListener('click', restartGame);
 preloadImages();
