@@ -52,7 +52,7 @@ function flipCard() {
         if (flippedCards.length === 2) {
             moves++;
             movesDisplay.textContent = `移動次數: ${moves}`;
-            setTimeout(checkMatch, 1000);
+            setTimeout(checkMatch, 300);
         }
     }
 }
@@ -60,24 +60,22 @@ function flipCard() {
 function checkMatch() {
     const [card1, card2] = flippedCards;
     if (card1.style.backgroundImage === card2.style.backgroundImage) {
+        if (matchSound) matchSound.play();
         score++;
         scoreDisplay.textContent = `配對成功: ${score}`;
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
-        console.log('Playing match sound');
-        if (matchSound) matchSound.play();
         if (score === totalCards / 2) {
             alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
         }
     } else {
+        if (mismatchSound) mismatchSound.play();
         setTimeout(() => {
             card1.classList.remove('flipped');
             card2.classList.remove('flipped');
             card1.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
             card2.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
-            console.log('Playing mismatch sound');
-            if (mismatchSound) mismatchSound.play();
-        }, 500);
+        }, 300);
     }
     flippedCards = [];
 }
