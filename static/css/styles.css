@@ -29,7 +29,18 @@
 }
 
 #restart {
-    margin-top: 10px;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#restart:hover {
+    background-color: var(--bs-primary-dark);
 }
 
 @media (max-width: 576px) {

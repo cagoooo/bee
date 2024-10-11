@@ -4,6 +4,7 @@ const movesDisplay = document.getElementById('moves');
 const restartButton = document.getElementById('restart');
 const flipSound = document.getElementById('flipSound');
 const matchSound = document.getElementById('matchSound');
+const mismatchSound = document.getElementById('mismatchSound');
 
 const cardBackImage = 'card-back.jpg';
 const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
@@ -62,10 +63,13 @@ function checkMatch() {
             alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
         }
     } else {
-        card1.classList.remove('flipped');
-        card2.classList.remove('flipped');
-        card1.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
-        card2.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
+        setTimeout(() => {
+            card1.classList.remove('flipped');
+            card2.classList.remove('flipped');
+            card1.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
+            card2.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
+            mismatchSound.play();
+        }, 500);
     }
     flippedCards = [];
 }

@@ -15,7 +15,7 @@
             <div id="game-stats" class="text-center">
                 <div id="score" class="mb-2">配對成功: 0</div>
                 <div id="moves" class="mb-2">移動次數: 0</div>
-                <button id="restart" class="btn btn-secondary">重新開始</button>
+                <button id="restart" class="btn btn-primary">重新開始</button>
             </div>
         </div>
     </div>
@@ -24,6 +24,9 @@
     </audio>
     <audio id="matchSound" preload="auto">
         <source src="{{ url_for('static', filename='audio/card-match.mp3') }}" type="audio/mpeg">
+    </audio>
+    <audio id="mismatchSound" preload="auto">
+        <source src="{{ url_for('static', filename='audio/card-mismatch.mp3') }}" type="audio/mpeg">
     </audio>
     <script src="{{ url_for('static', filename='js/game.js') }}"></script>
 </body>
