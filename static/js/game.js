@@ -5,6 +5,7 @@ const restartButton = document.getElementById('restart');
 const flipSound = document.getElementById('flipSound');
 const matchSound = document.getElementById('matchSound');
 const mismatchSound = document.getElementById('mismatchSound');
+const restartSound = document.getElementById('restartSound');
 
 const cardBackImage = 'card-back.jpg';
 const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
@@ -24,6 +25,7 @@ function preloadImages() {
     console.log('Loading audio:', '/static/audio/card-flip.mp3');
     console.log('Loading audio:', '/static/audio/card-match.mp3');
     console.log('Loading audio:', '/static/audio/card-mismatch.mp3');
+    console.log('Loading audio:', '/static/audio/restart.mp3');
 }
 
 function createBoard() {
@@ -81,6 +83,8 @@ function checkMatch() {
 }
 
 function restartGame() {
+    console.log('Playing restart sound');
+    restartSound.play();
     score = 0;
     moves = 0;
     scoreDisplay.textContent = '配對成功: 0';
@@ -91,6 +95,7 @@ function restartGame() {
 flipSound.onerror = () => console.error('Error loading flip sound');
 matchSound.onerror = () => console.error('Error loading match sound');
 mismatchSound.onerror = () => console.error('Error loading mismatch sound');
+restartSound.onerror = () => console.error('Error loading restart sound');
 
 restartButton.addEventListener('click', restartGame);
 preloadImages();
