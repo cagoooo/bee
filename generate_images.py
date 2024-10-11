@@ -4,7 +4,10 @@ import os
 def create_placeholder_image(filename, text, size=(200, 300), bg_color=(100, 100, 100), text_color=(255, 255, 255)):
     img = Image.new('RGB', size, color=bg_color)
     d = ImageDraw.Draw(img)
-    font = ImageFont.load_default()
+    try:
+        font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 40)
+    except IOError:
+        font = ImageFont.load_default()
     bbox = d.textbbox((0, 0), text, font=font)
     text_width = bbox[2] - bbox[0]
     text_height = bbox[3] - bbox[1]
@@ -15,8 +18,8 @@ def create_placeholder_image(filename, text, size=(200, 300), bg_color=(100, 100
 if not os.path.exists('static/images'):
     os.makedirs('static/images')
 
-create_placeholder_image('card-back.jpg', 'Back')
+create_placeholder_image('card-back.jpg', '背面')
 for i in range(1, 6):
-    create_placeholder_image(f'card{i}.jpg', f'Card {i}')
+    create_placeholder_image(f'card{i}.jpg', f'卡片 {i}')
 
 print("Placeholder images created successfully.")

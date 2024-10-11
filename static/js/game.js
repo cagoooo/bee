@@ -41,7 +41,7 @@ function flipCard() {
 
         if (flippedCards.length === 2) {
             moves++;
-            movesDisplay.textContent = `Moves: ${moves}`;
+            movesDisplay.textContent = `移動次數: ${moves}`;
             setTimeout(checkMatch, 1000);
         }
     }
@@ -51,11 +51,11 @@ function checkMatch() {
     const [card1, card2] = flippedCards;
     if (card1.style.backgroundImage === card2.style.backgroundImage) {
         score++;
-        scoreDisplay.textContent = `Matches: ${score}`;
+        scoreDisplay.textContent = `配對成功: ${score}`;
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         if (score === totalCards / 2) {
-            alert(`Congratulations! You completed the game in ${moves} moves.`);
+            alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
         }
     } else {
         card1.classList.remove('flipped');
@@ -69,8 +69,8 @@ function checkMatch() {
 function restartGame() {
     score = 0;
     moves = 0;
-    scoreDisplay.textContent = 'Matches: 0';
-    movesDisplay.textContent = 'Moves: 0';
+    scoreDisplay.textContent = '配對成功: 0';
+    movesDisplay.textContent = '移動次數: 0';
     createBoard();
 }
 

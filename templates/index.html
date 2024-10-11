@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="zh-TW" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Card Game</title>
+    <title>蜂勤昀友配對消消樂</title>
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-4">Memory Card Game</h1>
+        <h1 class="text-center my-4">蜂勤昀友配對消消樂</h1>
         <div id="game-container">
             <div id="game-board" class="mb-3"></div>
-            <div id="score" class="mb-2">Matches: 0</div>
-            <div id="moves" class="mb-2">Moves: 0</div>
-            <button id="restart" class="btn btn-secondary">Restart</button>
+            <div id="score" class="mb-2">配對成功: 0</div>
+            <div id="moves" class="mb-2">移動次數: 0</div>
+            <button id="restart" class="btn btn-secondary">重新開始</button>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/game.js') }}"></script>
