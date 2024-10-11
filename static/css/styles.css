@@ -19,6 +19,19 @@
     transform: rotateY(180deg);
 }
 
+#game-stats {
+    margin-top: 20px;
+}
+
+#score, #moves {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#restart {
+    margin-top: 10px;
+}
+
 @media (max-width: 576px) {
     #game-board {
         grid-template-columns: repeat(2, 1fr);
