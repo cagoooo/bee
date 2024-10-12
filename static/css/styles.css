@@ -44,7 +44,7 @@ body {
     margin-bottom: 2vmin;
 }
 
-#restart, #toggleMusic {
+#restart {
     font-size: 1rem;
     padding: 2vmin 4vmin;
     background-color: var(--bs-primary);
@@ -55,16 +55,8 @@ body {
     transition: background-color 0.3s;
 }
 
-#restart:hover, #toggleMusic:hover {
+#restart:hover {
     background-color: var(--bs-primary-dark);
-}
-
-#toggleMusic {
-    background-color: var(--bs-secondary);
-}
-
-#toggleMusic:hover {
-    background-color: var(--bs-secondary-dark);
 }
 
 .colorful-title {
@@ -139,7 +131,7 @@ body {
         font-size: 0.9rem;
     }
 
-    #restart, #toggleMusic {
+    #restart {
         font-size: 0.9rem;
     }
 }
