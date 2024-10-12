@@ -36,9 +36,17 @@ function createBoard() {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.index = index;
-        card.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
-        card.style.backgroundSize = 'cover';
-        card.style.backgroundPosition = 'center';
+        
+        const front = document.createElement('div');
+        front.classList.add('front');
+        front.style.backgroundImage = `url('/static/images/${image}')`;
+        
+        const back = document.createElement('div');
+        back.classList.add('back');
+        
+        card.appendChild(front);
+        card.appendChild(back);
+        
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
     });
@@ -47,40 +55,40 @@ function createBoard() {
 function flipCard() {
     if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
         this.classList.add('flipped');
-        this.style.backgroundImage = `url('/static/images/${cards[this.dataset.index]})`;
-        this.style.transform = 'rotateY(180deg) scaleX(-1)';
         flippedCards.push(this);
         playSound(flipSound);
 
         if (flippedCards.length === 2) {
             moves++;
             movesDisplay.textContent = `移動次數: ${moves}`;
-            setTimeout(checkMatch, 300);
+            setTimeout(checkMatch, 600);
         }
     }
 }
 
 function checkMatch() {
     const [card1, card2] = flippedCards;
-    if (card1.style.backgroundImage === card2.style.backgroundImage) {
+    const isMatch = card1.querySelector('.front').style.backgroundImage === card2.querySelector('.front').style.backgroundImage;
+
+    if (isMatch) {
         playSound(matchSound);
+        card1.classList.add('matched');
+        card2.classList.add('matched');
         score++;
         scoreDisplay.textContent = `配對成功: ${score}`;
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         if (score === 5) {  // 5 pairs
-            alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
+            setTimeout(() => {
+                alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
+            }, 500);
         }
     } else {
         playSound(mismatchSound);
         setTimeout(() => {
             card1.classList.remove('flipped');
             card2.classList.remove('flipped');
-            card1.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
-            card2.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
-            card1.style.transform = 'rotateY(0deg)';
-            card2.style.transform = 'rotateY(0deg)';
-        }, 300);
+        }, 600);
     }
     flippedCards = [];
 }
