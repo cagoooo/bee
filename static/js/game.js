@@ -60,6 +60,7 @@ function flipCard() {
         flippedCards.push(this);
         playSound(flipSound);
 
+        // Enhanced flip animation
         this.style.animation = 'flipAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
         
         if (flippedCards.length === 2) {
@@ -87,6 +88,7 @@ function checkMatch() {
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         
+        // Improved match animation
         card1.style.animation = 'matchAnimation 1.5s ease-in-out, matchedPulse 2s infinite';
         card2.style.animation = 'matchAnimation 1.5s ease-in-out, matchedPulse 2s infinite';
         
@@ -106,9 +108,15 @@ function checkMatch() {
             card1.classList.remove('flipped', 'mismatch');
             card2.classList.remove('flipped', 'mismatch');
             
-            card1.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
-            card2.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
-        }, 800);
+            // New mismatch animation
+            card1.style.animation = 'mismatchAnimation 0.8s ease-in-out';
+            card2.style.animation = 'mismatchAnimation 0.8s ease-in-out';
+            
+            setTimeout(() => {
+                card1.style.animation = '';
+                card2.style.animation = '';
+            }, 800);
+        }, 1000);
     }
     flippedCards = [];
 }
