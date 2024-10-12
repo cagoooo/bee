@@ -12,7 +12,7 @@ const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
 const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
-const totalCards = 10;
+const totalCards = 20;
 
 let cards = [];
 let flippedCards = [];
@@ -30,7 +30,7 @@ function preloadImages() {
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    const shuffledCards = cardImages.sort(() => Math.random() - 0.5);
+    const shuffledCards = [...cardImages, ...cardImages].sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
