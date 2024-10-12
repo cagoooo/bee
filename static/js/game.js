@@ -163,8 +163,13 @@ function createFloatingFlowers() {
     for (let i = 0; i < 10; i++) {
         const flower = document.createElement('div');
         flower.classList.add('flower');
-        flower.style.left = `${Math.random() * 100}vw`;
-        flower.style.animationDelay = `${Math.random() * 10}s`;
+        
+        const direction = Math.random() < 0.5 ? 'left-to-right' : 'right-to-left';
+        flower.classList.add(direction);
+        
+        flower.style.top = `${Math.random() * 100}vh`;
+        flower.style.animationDuration = `${15 + Math.random() * 10}s`;
+        
         container.appendChild(flower);
     }
 }
