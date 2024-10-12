@@ -30,12 +30,12 @@ function preloadImages() {
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    let cardPairs = cardImages.slice(0, 5);
-    cards = [...cardPairs, ...cardPairs].sort(() => Math.random() - 0.5);
+    cards = cardImages.sort(() => Math.random() - 0.5);
     cards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.index = index;
+        card.dataset.cardNumber = parseInt(image.replace('card', '').replace('.jpg', ''));
         
         const front = document.createElement('div');
         front.classList.add('front');
@@ -51,8 +51,6 @@ function createBoard() {
         
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
-
-        console.log('Card front image:', `/static/images/${image}`);
     });
 }
 
@@ -72,7 +70,11 @@ function flipCard() {
 
 function checkMatch() {
     const [card1, card2] = flippedCards;
-    const isMatch = card1.querySelector('.front').style.backgroundImage === card2.querySelector('.front').style.backgroundImage;
+    const card1Number = parseInt(card1.dataset.cardNumber);
+    const card2Number = parseInt(card2.dataset.cardNumber);
+    
+    const isMatch = (Math.min(card1Number, card2Number) % 2 === 1) && 
+                    (Math.max(card1Number, card2Number) - Math.min(card1Number, card2Number) === 1);
 
     if (isMatch) {
         playSound(matchSound);
