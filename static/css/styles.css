@@ -182,7 +182,6 @@ body {
 .char8 { animation-delay: 0.8s; }
 .char9 { animation-delay: 0.9s; }
 
-/* Bee-like flower animation */
 .flower {
     position: absolute;
     width: 5vmin;
@@ -215,7 +214,6 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* Particle explosion */
 .particle {
     position: absolute;
     width: 5px;
@@ -236,7 +234,6 @@ body {
     }
 }
 
-/* Ripple effect */
 .ripple {
     position: absolute;
     border-radius: 50%;
@@ -253,7 +250,6 @@ body {
     }
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
     #game-board {
         grid-template-columns: repeat(4, 1fr);
