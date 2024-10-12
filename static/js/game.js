@@ -84,19 +84,49 @@ function checkMatch() {
         scoreDisplay.textContent = `配對成功: ${score}`;
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
+        createParticles(card1);
+        createParticles(card2);
         if (score === 5) {  // 5 pairs
             setTimeout(() => {
                 alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
-            }, 500);
+            }, 1000);
         }
     } else {
         playSound(mismatchSound);
+        card1.classList.add('shake');
+        card2.classList.add('shake');
         setTimeout(() => {
-            card1.classList.remove('flipped');
-            card2.classList.remove('flipped');
+            card1.classList.remove('flipped', 'shake');
+            card2.classList.remove('flipped', 'shake');
         }, 600);
     }
     flippedCards = [];
+}
+
+function createParticles(card) {
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.backgroundColor = getRandomColor();
+        particle.style.left = `${centerX}px`;
+        particle.style.top = `${centerY}px`;
+        particle.style.setProperty('--angle', `${Math.random() * 360}deg`);
+        particle.style.setProperty('--distance', `${Math.random() * 100 + 50}px`);
+        document.body.appendChild(particle);
+
+        setTimeout(() => {
+            particle.remove();
+        }, 1000);
+    }
+}
+
+function getRandomColor() {
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
+    return colors[Math.floor(Math.random() * colors.length)];
 }
 
 function restartGame() {

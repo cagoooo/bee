@@ -62,20 +62,33 @@ body {
     transform: rotateY(180deg);
 }
 
-.card.matched {
-    animation: pulse 0.5s;
-}
-
-@keyframes pulse {
+@keyframes intensePulse {
     0% {
-        transform: scale(1);
+        transform: scale(1) rotate(0deg);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
     }
     50% {
-        transform: scale(1.1);
+        transform: scale(1.3) rotate(180deg);
+        box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.7);
     }
     100% {
-        transform: scale(1);
+        transform: scale(1) rotate(360deg);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
     }
+}
+
+.card.matched {
+    animation: intensePulse 1s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    75% { transform: translateX(5px) rotate(5deg); }
+}
+
+.card.shake {
+    animation: shake 0.5s ease-in-out;
 }
 
 #game-stats {
@@ -169,6 +182,27 @@ body {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+}
+
+/* Particle explosion */
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) scale(0);
+        opacity: 0;
+    }
 }
 
 /* Media Queries */
