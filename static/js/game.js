@@ -158,11 +158,26 @@ function toggleMute() {
     }
 }
 
+function createFloatingFlowers() {
+    const container = document.body;
+    const flowerCount = 10;
+
+    for (let i = 0; i < flowerCount; i++) {
+        const flower = document.createElement('div');
+        flower.classList.add('flower');
+        flower.style.left = `${Math.random() * 100}vw`;
+        flower.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        flower.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(flower);
+    }
+}
+
 restartButton.addEventListener('click', restartGame);
 muteButton.addEventListener('click', toggleMute);
 
 window.addEventListener('load', () => {
     backgroundMusic.play().catch(error => console.error('Error playing background music:', error));
+    createFloatingFlowers();
 });
 
 preloadImages();
