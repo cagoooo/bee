@@ -34,7 +34,7 @@ if not os.path.exists('static/images'):
     os.makedirs('static/images')
 
 create_placeholder_image('card-back.jpg', '背面')
-for i in range(1, 6):
+for i in range(1, 11):
     create_placeholder_image(f'card{i}.jpg', f'卡片 {i}')
 
 create_flower_image('flower.png')

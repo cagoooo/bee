@@ -16,7 +16,7 @@ body {
 
 #game-board {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 2vmin;
     max-width: 90vmin;
     margin: 0 auto;
@@ -131,7 +131,7 @@ body {
 /* Media Queries */
 @media (max-width: 768px) {
     #game-board {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .colorful-title {
