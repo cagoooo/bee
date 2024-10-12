@@ -100,11 +100,11 @@ function checkMatch() {
         }
     } else {
         playSound(mismatchSound);
-        card1.classList.add('shake');
-        card2.classList.add('shake');
+        card1.classList.add('mismatch');
+        card2.classList.add('mismatch');
         setTimeout(() => {
-            card1.classList.remove('flipped', 'shake');
-            card2.classList.remove('flipped', 'shake');
+            card1.classList.remove('flipped', 'mismatch');
+            card2.classList.remove('flipped', 'mismatch');
             
             card1.style.animation = 'flipBackAnimation 0.6s ease-out';
             card2.style.animation = 'flipBackAnimation 0.6s ease-out';
