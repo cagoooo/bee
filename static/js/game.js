@@ -38,16 +38,18 @@ function createBoard() {
         card.dataset.index = index;
         card.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
         card.style.backgroundSize = 'cover';
+        card.style.backgroundPosition = 'center';
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
     });
+    console.log('Card back image:', `/static/images/${cardBackImage}`);
 }
 
 function flipCard() {
     if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
         this.classList.add('flipped');
         this.style.backgroundImage = `url('/static/images/${cards[this.dataset.index]}')`;
-        this.style.transform = 'rotateY(180deg)';
+        this.style.transform = 'rotateY(180deg) scaleX(-1)';
         flippedCards.push(this);
         playSound(flipSound);
 
