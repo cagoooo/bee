@@ -168,7 +168,7 @@ body {
     position: absolute;
     width: 5vmin;
     height: 5vmin;
-    background: url('/static/images/flower.gif') no-repeat center center / contain;
+    background: url('/static/images/flower.png') no-repeat center center / contain;
     pointer-events: none;
     animation: floatFlower 10s linear infinite;
 }
