@@ -11,7 +11,7 @@ const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
+const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
 const totalCards = 10;
 
 let cards = [];
@@ -35,7 +35,8 @@ function preloadImages() {
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    cards = cardImages.sort(() => Math.random() - 0.5);
+    let cardPairs = [...cardImages, ...cardImages];
+    cards = shuffleArray(cardPairs);
     cards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -44,6 +45,14 @@ function createBoard() {
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
     });
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 function flipCard() {
@@ -64,7 +73,7 @@ function flipCard() {
 
 function checkMatch() {
     const [card1, card2] = flippedCards;
-    if (Math.floor(card1.dataset.index / 2) === Math.floor(card2.dataset.index / 2)) {
+    if (card1.style.backgroundImage === card2.style.backgroundImage) {
         playSound(matchSound);
         score++;
         scoreDisplay.textContent = `配對成功: ${score}`;
