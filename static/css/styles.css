@@ -168,11 +168,14 @@ body {
 }
 
 .colorful-title {
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: bold;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
     margin-bottom: 6vmin;
     letter-spacing: 0.1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #FFA07A, #98D8C8);
     -webkit-background-clip: text;
     background-clip: text;
@@ -180,9 +183,15 @@ body {
     animation: gradientText 10s ease infinite;
 }
 
+.title-line {
+    display: flex;
+    justify-content: center;
+}
+
 .colorful-title span {
     display: inline-block;
     animation: float 3s ease-in-out infinite;
+    margin: 0 0.1em;
 }
 
 @keyframes float {
@@ -274,7 +283,7 @@ body {
     }
 
     .colorful-title {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 }
 
@@ -284,7 +293,7 @@ body {
     }
 
     .colorful-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     #score, #moves {
