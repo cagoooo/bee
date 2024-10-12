@@ -11,8 +11,8 @@ const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
-const totalCards = 10;
+const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
+const totalCards = 20;
 
 let cards = [];
 let flippedCards = [];
@@ -77,7 +77,7 @@ function checkMatch() {
     const card2Number = parseInt(card2.dataset.cardNumber);
     
     const isMatch = (Math.min(card1Number, card2Number) % 2 === 1) && 
-                    (Math.max(card1Number, card2Number) - Math.min(card1Number, card2Number) === 1);
+                    (Math.max(card2Number, card1Number) - Math.min(card2Number, card1Number) === 1);
 
     if (isMatch) {
         playSound(matchSound);
