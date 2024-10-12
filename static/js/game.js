@@ -60,7 +60,6 @@ function flipCard() {
         flippedCards.push(this);
         playSound(flipSound);
 
-        // Enhanced flip animation
         this.style.animation = 'flipAnimation 0.6s ease-out';
         
         if (flippedCards.length === 2) {
@@ -88,16 +87,21 @@ function checkMatch() {
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         
-        // Enhanced match animation
-        card1.style.animation = 'matchAnimation 0.5s ease-in-out';
-        card2.style.animation = 'matchAnimation 0.5s ease-in-out';
+        card1.style.animation = 'matchAnimation 1.5s ease-in-out';
+        card2.style.animation = 'matchAnimation 1.5s ease-in-out';
         
         createParticles(card1);
         createParticles(card2);
+        
+        setTimeout(() => {
+            card1.style.visibility = 'hidden';
+            card2.style.visibility = 'hidden';
+        }, 1500);
+        
         if (score === 5) {  // 5 pairs
             setTimeout(() => {
                 alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
-            }, 1000);
+            }, 1500);
         }
     } else {
         playSound(mismatchSound);
@@ -107,7 +111,6 @@ function checkMatch() {
             card1.classList.remove('flipped', 'shake');
             card2.classList.remove('flipped', 'shake');
             
-            // Enhanced flip back animation
             card1.style.animation = 'flipBackAnimation 0.6s ease-out';
             card2.style.animation = 'flipBackAnimation 0.6s ease-out';
         }, 600);
@@ -120,24 +123,24 @@ function createParticles(card) {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 50; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
         particle.style.backgroundColor = getRandomColor();
         particle.style.left = `${centerX}px`;
         particle.style.top = `${centerY}px`;
         particle.style.setProperty('--angle', `${Math.random() * 360}deg`);
-        particle.style.setProperty('--distance', `${Math.random() * 100 + 50}px`);
+        particle.style.setProperty('--distance', `${Math.random() * 150 + 50}px`);
         document.body.appendChild(particle);
 
         setTimeout(() => {
             particle.remove();
-        }, 1000);
+        }, 1500);
     }
 }
 
 function getRandomColor() {
-    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#FFD700', '#FF69B4', '#00CED1'];
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
