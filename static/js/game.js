@@ -37,6 +37,7 @@ function createBoard() {
         card.classList.add('card');
         card.dataset.index = index;
         card.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
+        card.style.backgroundSize = 'cover';
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
     });
@@ -46,6 +47,7 @@ function flipCard() {
     if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
         this.classList.add('flipped');
         this.style.backgroundImage = `url('/static/images/${cards[this.dataset.index]}')`;
+        this.style.transform = 'rotateY(180deg)';
         flippedCards.push(this);
         playSound(flipSound);
 
@@ -75,6 +77,8 @@ function checkMatch() {
             card2.classList.remove('flipped');
             card1.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
             card2.style.backgroundImage = `url('/static/images/${cardBackImage}')`;
+            card1.style.transform = 'rotateY(0deg)';
+            card2.style.transform = 'rotateY(0deg)';
         }, 300);
     }
     flippedCards = [];
