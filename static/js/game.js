@@ -40,6 +40,8 @@ function createBoard() {
         const front = document.createElement('div');
         front.classList.add('front');
         front.style.backgroundImage = `url('/static/images/${image}')`;
+        front.style.backgroundSize = 'cover';
+        front.style.backgroundPosition = 'center';
         
         const back = document.createElement('div');
         back.classList.add('back');
@@ -49,6 +51,8 @@ function createBoard() {
         
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
+
+        console.log('Card front image:', `/static/images/${image}`);
     });
 }
 
