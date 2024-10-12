@@ -11,8 +11,8 @@ const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
-const totalCards = 5;
+const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
+const totalCards = 10;
 
 let cards = [];
 let flippedCards = [];
@@ -30,11 +30,12 @@ function preloadImages() {
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    const shuffledCards = [...cardImages, ...cardImages].sort(() => Math.random() - 0.5);
+    const shuffledCards = cardImages.sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.index = index;
+        card.dataset.pairId = Math.ceil((index + 1) / 2);
         
         const front = document.createElement('div');
         front.classList.add('front');
@@ -69,7 +70,7 @@ function flipCard() {
 
 function checkMatch() {
     const [card1, card2] = flippedCards;
-    const isMatch = card1.querySelector('.front').style.backgroundImage === card2.querySelector('.front').style.backgroundImage;
+    const isMatch = card1.dataset.pairId === card2.dataset.pairId;
 
     if (isMatch) {
         playSound(matchSound);
@@ -81,7 +82,7 @@ function checkMatch() {
         card2.removeEventListener('click', flipCard);
         createParticles(card1);
         createParticles(card2);
-        if (score === totalCards) {
+        if (score === totalCards / 2) {
             setTimeout(() => {
                 alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
             }, 1000);
