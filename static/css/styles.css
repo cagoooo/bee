@@ -60,10 +60,17 @@ body {
 }
 
 .colorful-title {
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    margin-bottom: 4vmin;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    margin-top: 10vh;
+    margin-bottom: 6vmin;
+    letter-spacing: 0.1em;
+    background: linear-gradient(45deg, var(--bs-primary), var(--bs-info), var(--bs-warning), var(--bs-danger));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientText 10s ease infinite;
 }
 
 .colorful-title span {
@@ -76,15 +83,21 @@ body {
     50% { transform: translateY(-10px); }
 }
 
-.char1 { color: var(--bs-primary); animation-delay: 0.1s; }
-.char2 { color: var(--bs-secondary); animation-delay: 0.2s; }
-.char3 { color: var(--bs-success); animation-delay: 0.3s; }
-.char4 { color: var(--bs-info); animation-delay: 0.4s; }
-.char5 { color: var(--bs-warning); animation-delay: 0.5s; }
-.char6 { color: var(--bs-danger); animation-delay: 0.6s; }
-.char7 { color: var(--bs-light); animation-delay: 0.7s; }
-.char8 { color: var(--bs-dark); animation-delay: 0.8s; }
-.char9 { color: var(--bs-primary); animation-delay: 0.9s; }
+@keyframes gradientText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.char1 { animation-delay: 0.1s; }
+.char2 { animation-delay: 0.2s; }
+.char3 { animation-delay: 0.3s; }
+.char4 { animation-delay: 0.4s; }
+.char5 { animation-delay: 0.5s; }
+.char6 { animation-delay: 0.6s; }
+.char7 { animation-delay: 0.7s; }
+.char8 { animation-delay: 0.8s; }
+.char9 { animation-delay: 0.9s; }
 
 /* Floating flowers animation */
 .flower {
@@ -114,7 +127,8 @@ body {
     }
 
     .colorful-title {
-        font-size: 1.5rem;
+        font-size: 2.5rem;
+        margin-top: 8vh;
     }
 }
 
@@ -124,7 +138,8 @@ body {
     }
 
     .colorful-title {
-        font-size: 1.2rem;
+        font-size: 2rem;
+        margin-top: 6vh;
     }
 
     #score, #moves {
