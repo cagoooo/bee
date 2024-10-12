@@ -124,14 +124,17 @@ function fadeOutMusic() {
     }, 100);
 }
 
-if (flipSound) flipSound.onerror = () => console.error('Error loading flip sound');
-if (matchSound) matchSound.onerror = () => console.error('Error loading match sound');
-if (mismatchSound) mismatchSound.onerror = () => console.error('Error loading mismatch sound');
-if (restartSound) restartSound.onerror = () => console.error('Error loading restart sound');
-if (backgroundMusic) backgroundMusic.onerror = () => console.error('Error loading background music');
+// Wrap the initialization code in a DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
+    if (flipSound) flipSound.onerror = () => console.error('Error loading flip sound');
+    if (matchSound) matchSound.onerror = () => console.error('Error loading match sound');
+    if (mismatchSound) mismatchSound.onerror = () => console.error('Error loading mismatch sound');
+    if (restartSound) restartSound.onerror = () => console.error('Error loading restart sound');
+    if (backgroundMusic) backgroundMusic.onerror = () => console.error('Error loading background music');
 
-restartButton.addEventListener('click', restartGame);
-toggleMusicButton.addEventListener('click', toggleMusic);
+    if (restartButton) restartButton.addEventListener('click', restartGame);
+    if (toggleMusicButton) toggleMusicButton.addEventListener('click', toggleMusic);
 
-preloadImages();
-createBoard();
+    preloadImages();
+    createBoard();
+});
