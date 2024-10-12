@@ -11,9 +11,13 @@ const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
-const totalCards = 10;
+const cardImagesByDifficulty = {
+    beginner: ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'],
+    intermediate: ['card11.jpg', 'card12.jpg', 'card13.jpg', 'card14.jpg', 'card15.jpg', 'card16.jpg', 'card17.jpg', 'card18.jpg', 'card19.jpg', 'card20.jpg'],
+    advanced: ['card21.jpg', 'card22.jpg', 'card23.jpg', 'card24.jpg', 'card25.jpg', 'card26.jpg', 'card27.jpg', 'card28.jpg', 'card29.jpg', 'card30.jpg']
+};
 
+let currentDifficulty = 'beginner';
 let cards = [];
 let flippedCards = [];
 let score = 0;
@@ -21,8 +25,8 @@ let moves = 0;
 let isMuted = false;
 
 function preloadImages() {
-    const images = [cardBackImage, ...cardImages];
-    images.forEach((image) => {
+    const allImages = [cardBackImage, ...Object.values(cardImagesByDifficulty).flat()];
+    allImages.forEach((image) => {
         const img = new Image();
         img.src = `/static/images/${image}`;
     });
@@ -30,7 +34,8 @@ function preloadImages() {
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    cards = cardImages.sort(() => Math.random() - 0.5);
+    const cardImages = cardImagesByDifficulty[currentDifficulty];
+    cards = [...cardImages, ...cardImages].sort(() => Math.random() - 0.5);
     cards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -73,8 +78,13 @@ function checkMatch() {
     const card1Number = parseInt(card1.dataset.cardNumber);
     const card2Number = parseInt(card2.dataset.cardNumber);
     
-    const isMatch = (Math.min(card1Number, card2Number) % 2 === 1) && 
-                    (Math.max(card1Number, card2Number) - Math.min(card1Number, card2Number) === 1);
+    let isMatch;
+    if (currentDifficulty === 'beginner') {
+        isMatch = (Math.min(card1Number, card2Number) % 2 === 1) && 
+                  (Math.max(card1Number, card2Number) - Math.min(card1Number, card2Number) === 1);
+    } else {
+        isMatch = Math.abs(card1Number - card2Number) === 1 && Math.floor((card1Number - 1) / 2) === Math.floor((card2Number - 1) / 2);
+    }
 
     if (isMatch) {
         playSound(matchSound);
@@ -86,9 +96,9 @@ function checkMatch() {
         card2.removeEventListener('click', flipCard);
         createParticles(card1);
         createParticles(card2);
-        if (score === 5) {  // 5 pairs
+        if (score === cards.length / 2) {
             setTimeout(() => {
-                alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
+                alert(`恭喜！你完成了${getDifficultyName()}難度，總共移動 ${moves} 次。`);
             }, 1000);
         }
     } else {
@@ -101,6 +111,17 @@ function checkMatch() {
         }, 600);
     }
     flippedCards = [];
+}
+
+function getDifficultyName() {
+    switch (currentDifficulty) {
+        case 'beginner':
+            return '初級';
+        case 'intermediate':
+            return '中級';
+        case 'advanced':
+            return '高級';
+    }
 }
 
 function createParticles(card) {
@@ -136,6 +157,7 @@ function restartGame() {
     scoreDisplay.textContent = '配對成功: 0';
     movesDisplay.textContent = '移動次數: 0';
     createBoard();
+    updateFloatingFlowers();
 }
 
 function playSound(sound) {
@@ -160,7 +182,9 @@ function toggleMute() {
 
 function createFloatingFlowers() {
     const container = document.querySelector('.container');
-    for (let i = 0; i < 10; i++) {
+    container.querySelectorAll('.flower').forEach(flower => flower.remove());
+    const flowerCount = getDifficultyFlowerCount();
+    for (let i = 0; i < flowerCount; i++) {
         const flower = document.createElement('div');
         flower.classList.add('flower');
         
@@ -168,10 +192,36 @@ function createFloatingFlowers() {
         flower.classList.add(direction);
         
         flower.style.top = `${Math.random() * 100}vh`;
-        flower.style.animationDuration = `${15 + Math.random() * 10}s`;
+        flower.style.animationDuration = `${getDifficultyFlowerSpeed()}s`;
         
         container.appendChild(flower);
     }
+}
+
+function getDifficultyFlowerCount() {
+    switch (currentDifficulty) {
+        case 'beginner':
+            return 10;
+        case 'intermediate':
+            return 15;
+        case 'advanced':
+            return 20;
+    }
+}
+
+function getDifficultyFlowerSpeed() {
+    switch (currentDifficulty) {
+        case 'beginner':
+            return 15 + Math.random() * 10;
+        case 'intermediate':
+            return 10 + Math.random() * 8;
+        case 'advanced':
+            return 5 + Math.random() * 5;
+    }
+}
+
+function updateFloatingFlowers() {
+    createFloatingFlowers();
 }
 
 function addRippleEffect(event) {
@@ -194,6 +244,11 @@ function addRippleEffect(event) {
     });
 }
 
+function changeDifficulty(difficulty) {
+    currentDifficulty = difficulty;
+    restartGame();
+}
+
 restartButton.addEventListener('click', (event) => {
     addRippleEffect(event);
     restartGame();
@@ -207,3 +262,6 @@ window.addEventListener('load', () => {
 
 preloadImages();
 createBoard();
+
+// Expose changeDifficulty function to global scope
+window.changeDifficulty = changeDifficulty;
