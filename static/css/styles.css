@@ -78,17 +78,31 @@ body {
 }
 
 .card.matched {
-    animation: intensePulse 1s ease-in-out;
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.7);
+    animation: matchedPulse 2s infinite;
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0) rotateY(180deg); }
-    25% { transform: translateX(-5px) rotateY(180deg); }
-    75% { transform: translateX(5px) rotateY(180deg); }
+@keyframes matchedPulse {
+    0% { transform: scale(1) rotateY(180deg); }
+    50% { transform: scale(1.05) rotateY(180deg); }
+    100% { transform: scale(1) rotateY(180deg); }
 }
 
 .card.shake {
-    animation: shake 0.5s ease-in-out;
+    animation: intensifiedShake 0.5s ease-in-out, redFlash 0.5s;
+}
+
+@keyframes intensifiedShake {
+    0%, 100% { transform: translateX(0) rotateY(180deg); }
+    20% { transform: translateX(-20px) rotateY(180deg); }
+    40% { transform: translateX(20px) rotateY(180deg); }
+    60% { transform: translateX(-20px) rotateY(180deg); }
+    80% { transform: translateX(20px) rotateY(180deg); }
+}
+
+@keyframes redFlash {
+    0%, 100% { outline: none; }
+    50% { outline: 3px solid red; }
 }
 
 /* Animations */

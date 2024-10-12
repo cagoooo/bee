@@ -87,16 +87,11 @@ function checkMatch() {
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         
-        card1.style.animation = 'matchAnimation 1.5s ease-in-out';
-        card2.style.animation = 'matchAnimation 1.5s ease-in-out';
+        card1.style.animation = 'matchAnimation 1.5s ease-in-out, matchedPulse 2s infinite';
+        card2.style.animation = 'matchAnimation 1.5s ease-in-out, matchedPulse 2s infinite';
         
         createParticles(card1);
         createParticles(card2);
-        
-        setTimeout(() => {
-            card1.style.visibility = 'hidden';
-            card2.style.visibility = 'hidden';
-        }, 1500);
         
         if (score === 5) {  // 5 pairs
             setTimeout(() => {
@@ -113,7 +108,7 @@ function checkMatch() {
             
             card1.style.animation = 'flipBackAnimation 0.6s ease-out';
             card2.style.animation = 'flipBackAnimation 0.6s ease-out';
-        }, 600);
+        }, 1000);
     }
     flippedCards = [];
 }
