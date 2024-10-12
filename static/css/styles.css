@@ -28,7 +28,7 @@ body {
     background-position: center;
     border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.6s;
+    transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
     transform-style: preserve-3d;
     position: relative;
 }
@@ -78,41 +78,42 @@ body {
 }
 
 .card.matched {
-    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.7);
-    animation: matchedPulse 2s infinite;
+    animation: matchAnimation 1.5s ease-in-out, matchedPulse 2s infinite;
 }
 
 @keyframes matchedPulse {
-    0% { transform: scale(1) rotateY(180deg); }
-    50% { transform: scale(1.05) rotateY(180deg); }
-    100% { transform: scale(1) rotateY(180deg); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    50% { box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.7); }
 }
 
 @keyframes mismatchAnimation {
     0%, 100% { transform: translateX(0) rotateY(180deg) scale(1); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-15px) rotateY(180deg) scale(1.05); }
-    20%, 40%, 60%, 80% { transform: translateX(15px) rotateY(180deg) scale(0.95); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px) rotateY(195deg) scale(1.05); }
+    20%, 40%, 60%, 80% { transform: translateX(10px) rotateY(165deg) scale(0.95); }
 }
 
 .card.mismatch {
     animation: mismatchAnimation 0.8s ease-in-out;
 }
 
-/* Animations */
 @keyframes flipAnimation {
-    0% { transform: rotateY(0); }
-    100% { transform: rotateY(180deg); }
+    0% { transform: rotateY(0) scale(1); }
+    50% { transform: rotateY(90deg) scale(1.1); }
+    100% { transform: rotateY(180deg) scale(1); }
 }
 
 @keyframes flipBackAnimation {
-    0% { transform: rotateY(180deg); }
-    100% { transform: rotateY(0); }
+    0% { transform: rotateY(180deg) scale(1); }
+    50% { transform: rotateY(90deg) scale(1.1); }
+    100% { transform: rotateY(0) scale(1); }
 }
 
 @keyframes matchAnimation {
     0% { transform: scale(1) rotateY(180deg); }
-    50% { transform: scale(1.2) rotateY(540deg); }
-    100% { transform: scale(1) rotateY(720deg); }
+    25% { transform: scale(1.1) rotateY(270deg); }
+    50% { transform: scale(1.2) rotateY(360deg); }
+    75% { transform: scale(1.1) rotateY(450deg); }
+    100% { transform: scale(1) rotateY(540deg); }
 }
 
 #game-stats {
@@ -167,13 +168,12 @@ body {
 }
 
 .colorful-title {
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: bold;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-    margin-top: 10vh;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
     margin-bottom: 6vmin;
     letter-spacing: 0.1em;
-    background: linear-gradient(45deg, var(--bs-primary), var(--bs-info), var(--bs-warning), var(--bs-danger));
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #FFA07A, #98D8C8);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -196,15 +196,15 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-.char1 { animation-delay: 0.1s; }
-.char2 { animation-delay: 0.2s; }
-.char3 { animation-delay: 0.3s; }
-.char4 { animation-delay: 0.4s; }
-.char5 { animation-delay: 0.5s; }
-.char6 { animation-delay: 0.6s; }
-.char7 { animation-delay: 0.7s; }
-.char8 { animation-delay: 0.8s; }
-.char9 { animation-delay: 0.9s; }
+.char1 { animation-delay: 0.1s; color: #FF6B6B; }
+.char2 { animation-delay: 0.2s; color: #4ECDC4; }
+.char3 { animation-delay: 0.3s; color: #45B7D1; }
+.char4 { animation-delay: 0.4s; color: #FFA07A; }
+.char5 { animation-delay: 0.5s; color: #98D8C8; }
+.char6 { animation-delay: 0.6s; color: #FF6B6B; }
+.char7 { animation-delay: 0.7s; color: #4ECDC4; }
+.char8 { animation-delay: 0.8s; color: #45B7D1; }
+.char9 { animation-delay: 0.9s; color: #FFA07A; }
 
 .flower {
     position: absolute;
@@ -240,22 +240,16 @@ body {
 
 .particle {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     pointer-events: none;
-    animation: explode 1.5s ease-out forwards;
+    animation: particle 1s ease-out forwards;
 }
 
-@keyframes explode {
-    0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-150px) scale(0);
-        opacity: 0;
-    }
+@keyframes particle {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
 }
 
 .ripple {
@@ -280,8 +274,7 @@ body {
     }
 
     .colorful-title {
-        font-size: 2.5rem;
-        margin-top: 8vh;
+        font-size: 3rem;
     }
 }
 
@@ -291,8 +284,7 @@ body {
     }
 
     .colorful-title {
-        font-size: 2rem;
-        margin-top: 6vh;
+        font-size: 2.5rem;
     }
 
     #score, #moves {

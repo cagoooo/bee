@@ -60,7 +60,7 @@ function flipCard() {
         flippedCards.push(this);
         playSound(flipSound);
 
-        this.style.animation = 'flipAnimation 0.6s ease-out';
+        this.style.animation = 'flipAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
         
         if (flippedCards.length === 2) {
             moves++;
@@ -106,9 +106,9 @@ function checkMatch() {
             card1.classList.remove('flipped', 'mismatch');
             card2.classList.remove('flipped', 'mismatch');
             
-            card1.style.animation = 'flipBackAnimation 0.6s ease-out';
-            card2.style.animation = 'flipBackAnimation 0.6s ease-out';
-        }, 800); // Changed from 1000ms to 800ms to match the new animation duration
+            card1.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            card2.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+        }, 800);
     }
     flippedCards = [];
 }
@@ -118,19 +118,26 @@ function createParticles(card) {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
         particle.style.backgroundColor = getRandomColor();
         particle.style.left = `${centerX}px`;
         particle.style.top = `${centerY}px`;
-        particle.style.setProperty('--angle', `${Math.random() * 360}deg`);
-        particle.style.setProperty('--distance', `${Math.random() * 150 + 50}px`);
+        
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 100 + 50;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
         document.body.appendChild(particle);
 
         setTimeout(() => {
             particle.remove();
-        }, 1500);
+        }, 1000);
     }
 }
 
