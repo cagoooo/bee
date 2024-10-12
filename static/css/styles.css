@@ -44,7 +44,7 @@ body {
     margin-bottom: 2vmin;
 }
 
-#restart {
+#restart, #mute-button {
     font-size: 1rem;
     padding: 2vmin 4vmin;
     background-color: var(--bs-primary);
@@ -55,8 +55,16 @@ body {
     transition: background-color 0.3s;
 }
 
-#restart:hover {
+#restart:hover, #mute-button:hover {
     background-color: var(--bs-primary-dark);
+}
+
+#mute-button {
+    background-color: var(--bs-secondary);
+}
+
+#mute-button:hover {
+    background-color: var(--bs-secondary-dark);
 }
 
 .colorful-title {
@@ -146,7 +154,7 @@ body {
         font-size: 0.9rem;
     }
 
-    #restart {
+    #restart, #mute-button {
         font-size: 0.9rem;
     }
 }
