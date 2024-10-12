@@ -11,7 +11,7 @@ const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
+const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
 const totalCards = 10;
 
 let cards = [];
@@ -30,7 +30,7 @@ function preloadImages() {
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    const shuffledCards = [...cardImages, ...cardImages].sort(() => Math.random() - 0.5);
+    const shuffledCards = [...cardImages].sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -60,7 +60,7 @@ function flipCard() {
         flippedCards.push(this);
         playSound(flipSound);
 
-        // Add flip animation
+        // Enhanced flip animation
         this.style.animation = 'flipAnimation 0.6s ease-out';
         
         if (flippedCards.length === 2) {
@@ -76,7 +76,8 @@ function checkMatch() {
     const card1Number = parseInt(card1.dataset.cardNumber);
     const card2Number = parseInt(card2.dataset.cardNumber);
     
-    const isMatch = card1Number === card2Number;
+    const isMatch = (Math.min(card1Number, card2Number) % 2 === 1) && 
+                    (Math.max(card1Number, card2Number) - Math.min(card1Number, card2Number) === 1);
 
     if (isMatch) {
         playSound(matchSound);
@@ -87,7 +88,7 @@ function checkMatch() {
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         
-        // Add match animation
+        // Enhanced match animation
         card1.style.animation = 'matchAnimation 0.5s ease-in-out';
         card2.style.animation = 'matchAnimation 0.5s ease-in-out';
         
@@ -106,7 +107,7 @@ function checkMatch() {
             card1.classList.remove('flipped', 'shake');
             card2.classList.remove('flipped', 'shake');
             
-            // Add flip back animation
+            // Enhanced flip back animation
             card1.style.animation = 'flipBackAnimation 0.6s ease-out';
             card2.style.animation = 'flipBackAnimation 0.6s ease-out';
         }, 600);
