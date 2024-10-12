@@ -30,12 +30,11 @@ function preloadImages() {
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    cards = cardImages.sort(() => Math.random() - 0.5);
-    cards.forEach((image, index) => {
+    const shuffledCards = [...cardImages, ...cardImages].sort(() => Math.random() - 0.5);
+    shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.index = index;
-        card.dataset.cardNumber = parseInt(image.replace('card', '').replace('.jpg', ''));
         
         const front = document.createElement('div');
         front.classList.add('front');
@@ -70,11 +69,7 @@ function flipCard() {
 
 function checkMatch() {
     const [card1, card2] = flippedCards;
-    const card1Number = parseInt(card1.dataset.cardNumber);
-    const card2Number = parseInt(card2.dataset.cardNumber);
-    
-    const isMatch = (Math.min(card1Number, card2Number) % 2 === 1) && 
-                    (Math.max(card1Number, card2Number) - Math.min(card1Number, card2Number) === 1);
+    const isMatch = card1.querySelector('.front').style.backgroundImage === card2.querySelector('.front').style.backgroundImage;
 
     if (isMatch) {
         playSound(matchSound);
@@ -86,7 +81,7 @@ function checkMatch() {
         card2.removeEventListener('click', flipCard);
         createParticles(card1);
         createParticles(card2);
-        if (score === 5) {  // 5 pairs
+        if (score === totalCards) {
             setTimeout(() => {
                 alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
             }, 1000);
