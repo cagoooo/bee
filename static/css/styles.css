@@ -100,19 +100,38 @@ body {
     margin-bottom: 2vmin;
 }
 
-#restart, #mute-button {
-    font-size: 1rem;
-    padding: 2vmin 4vmin;
-    background-color: var(--bs-primary);
-    color: var(--bs-white);
+#restart {
+    background: linear-gradient(45deg, var(--bs-primary), var(--bs-info));
     border: none;
+    color: white;
+    padding: 10px 20px;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
-#restart:hover, #mute-button:hover {
-    background-color: var(--bs-primary-dark);
+#restart:hover {
+    background: linear-gradient(45deg, var(--bs-info), var(--bs-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+#restart:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+#restart:not(:active) {
+    animation: pulse 2s infinite;
 }
 
 #mute-button {
@@ -213,6 +232,23 @@ body {
     }
     100% {
         transform: translateY(-100px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Ripple effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
         opacity: 0;
     }
 }
