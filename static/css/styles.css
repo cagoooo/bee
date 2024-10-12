@@ -48,3 +48,73 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* New styles for colorful title and animated background */
+body {
+    background: linear-gradient(135deg, var(--bs-primary), var(--bs-success));
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.colorful-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.colorful-title span {
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.char1 { color: var(--bs-primary); animation-delay: 0.1s; }
+.char2 { color: var(--bs-secondary); animation-delay: 0.2s; }
+.char3 { color: var(--bs-success); animation-delay: 0.3s; }
+.char4 { color: var(--bs-info); animation-delay: 0.4s; }
+.char5 { color: var(--bs-warning); animation-delay: 0.5s; }
+.char6 { color: var(--bs-danger); animation-delay: 0.6s; }
+.char7 { color: var(--bs-light); animation-delay: 0.7s; }
+.char8 { color: var(--bs-dark); animation-delay: 0.8s; }
+.char9 { color: var(--bs-primary); animation-delay: 0.9s; }
+
+/* Floating flowers animation */
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: url('/static/images/flower.png') no-repeat center center / contain;
+    pointer-events: none;
+    animation: floatFlower 10s linear infinite;
+}
+
+@keyframes floatFlower {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
