@@ -21,7 +21,7 @@ let moves = 0;
 let isMuted = false;
 
 function preloadImages() {
-    const images = [cardBackImage, ...cardImages];
+    const images = [cardBackImage, ...cardImages, 'flower.png', 'flower-flipped.png'];
     images.forEach((image) => {
         const img = new Image();
         img.src = `/static/images/${image}`;
@@ -108,7 +108,7 @@ function checkMatch() {
             
             card1.style.animation = 'flipBackAnimation 0.6s ease-out';
             card2.style.animation = 'flipBackAnimation 0.6s ease-out';
-        }, 800); // Changed from 1000ms to 800ms to match the new animation duration
+        }, 800);
     }
     flippedCards = [];
 }
@@ -176,6 +176,11 @@ function createFloatingFlowers() {
         
         const direction = Math.random() < 0.5 ? 'left-to-right' : 'right-to-left';
         flower.classList.add(direction);
+        
+        // Use the appropriate image based on the direction
+        if (direction === 'right-to-left') {
+            flower.style.backgroundImage = "url('/static/images/flower-flipped.png')";
+        }
         
         flower.style.top = `${Math.random() * 100}vh`;
         flower.style.animationDuration = `${15 + Math.random() * 10}s`;

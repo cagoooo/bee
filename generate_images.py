@@ -29,6 +29,10 @@ def create_flower_image(filename, size=(20, 20), color=(255, 192, 203)):
     d.ellipse([center - petal_size // 2, center - petal_size // 2,
                center + petal_size // 2, center + petal_size // 2], fill=(255, 255, 0))
     img.save(f'static/images/{filename}', 'PNG')
+    
+    # Create flipped version
+    flipped_flower = img.transpose(Image.FLIP_LEFT_RIGHT)
+    flipped_flower.save(f'static/images/{filename.replace(".png", "-flipped.png")}', 'PNG')
 
 if not os.path.exists('static/images'):
     os.makedirs('static/images')
@@ -39,4 +43,4 @@ for i in range(1, 11):
 
 create_flower_image('flower.png')
 
-print("Placeholder images and flower image created successfully.")
+print("Placeholder images and flower images created successfully.")

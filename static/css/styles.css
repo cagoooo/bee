@@ -229,6 +229,7 @@ body {
 }
 
 .flower.right-to-left {
+    background: url('/static/images/flower-flipped.png') no-repeat center center / contain;
     animation: flyRightToLeft 15s linear infinite;
 }
 
