@@ -11,8 +11,8 @@ const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
-const totalCards = 20;
+const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
+const totalCards = 10;
 
 let cards = [];
 let flippedCards = [];
@@ -76,8 +76,7 @@ function checkMatch() {
     const card1Number = parseInt(card1.dataset.cardNumber);
     const card2Number = parseInt(card2.dataset.cardNumber);
     
-    const isMatch = (Math.min(card1Number, card2Number) % 2 === 1) && 
-                    (Math.max(card2Number, card1Number) - Math.min(card2Number, card1Number) === 1);
+    const isMatch = card1Number === card2Number;
 
     if (isMatch) {
         playSound(matchSound);
@@ -94,7 +93,7 @@ function checkMatch() {
         
         createParticles(card1);
         createParticles(card2);
-        if (score === totalCards / 2) {
+        if (score === 5) {  // 5 pairs
             setTimeout(() => {
                 alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
             }, 1000);
