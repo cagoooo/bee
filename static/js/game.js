@@ -11,7 +11,7 @@ const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
+const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
 const totalCards = 10;
 
 let cards = [];
@@ -26,17 +26,12 @@ function preloadImages() {
         const img = new Image();
         img.src = `/static/images/${image}`;
     });
-    console.log('Loading audio:', '/static/audio/card-flip.mp3');
-    console.log('Loading audio:', '/static/audio/card-match.mp3');
-    console.log('Loading audio:', '/static/audio/card-mismatch.mp3');
-    console.log('Loading audio:', '/static/audio/restart.mp3');
-    console.log('Loading audio:', '/static/audio/background-music.mp3');
 }
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    let cardPairs = [...cardImages, ...cardImages];
-    cards = shuffleArray(cardPairs);
+    let cardPairs = cardImages.slice(0, 5);
+    cards = [...cardPairs, ...cardPairs].sort(() => Math.random() - 0.5);
     cards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -47,20 +42,11 @@ function createBoard() {
     });
 }
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
 function flipCard() {
     if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
         this.classList.add('flipped');
         this.style.backgroundImage = `url('/static/images/${cards[this.dataset.index]}')`;
         flippedCards.push(this);
-        console.log('Playing flip sound');
         playSound(flipSound);
 
         if (flippedCards.length === 2) {
@@ -79,7 +65,7 @@ function checkMatch() {
         scoreDisplay.textContent = `配對成功: ${score}`;
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
-        if (score === totalCards / 2) {
+        if (score === 5) {  // 5 pairs
             alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
         }
     } else {
@@ -95,7 +81,6 @@ function checkMatch() {
 }
 
 function restartGame() {
-    console.log('Playing restart sound');
     playSound(restartSound);
     score = 0;
     moves = 0;
@@ -107,7 +92,7 @@ function restartGame() {
 function playSound(sound) {
     if (!isMuted && sound) {
         sound.currentTime = 0;
-        sound.play();
+        sound.play().catch(error => console.error('Error playing sound:', error));
     }
 }
 
@@ -120,21 +105,15 @@ function toggleMute() {
     } else {
         muteIcon.classList.remove('bi-volume-mute-fill');
         muteIcon.classList.add('bi-volume-up-fill');
-        backgroundMusic.play();
+        backgroundMusic.play().catch(error => console.error('Error playing background music:', error));
     }
 }
-
-if (flipSound) flipSound.onerror = () => console.error('Error loading flip sound');
-if (matchSound) matchSound.onerror = () => console.error('Error loading match sound');
-if (mismatchSound) mismatchSound.onerror = () => console.error('Error loading mismatch sound');
-if (restartSound) restartSound.onerror = () => console.error('Error loading restart sound');
-if (backgroundMusic) backgroundMusic.onerror = () => console.error('Error loading background music');
 
 restartButton.addEventListener('click', restartGame);
 muteButton.addEventListener('click', toggleMute);
 
 window.addEventListener('load', () => {
-    backgroundMusic.play();
+    backgroundMusic.play().catch(error => console.error('Error playing background music:', error));
 });
 
 preloadImages();
