@@ -108,7 +108,7 @@ function checkMatch() {
             
             card1.style.animation = 'flipBackAnimation 0.6s ease-out';
             card2.style.animation = 'flipBackAnimation 0.6s ease-out';
-        }, 1000);
+        }, 800); // Changed from 1000ms to 800ms to match the new animation duration
     }
     flippedCards = [];
 }

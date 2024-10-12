@@ -89,15 +89,13 @@ body {
 }
 
 @keyframes mismatchAnimation {
-    0%, 100% { transform: translateX(0) rotateY(180deg) scale(1); background-color: var(--bs-primary); }
-    20% { transform: translateX(-20px) rotateY(200deg) scale(1.1); background-color: var(--bs-danger); }
-    40% { transform: translateX(20px) rotateY(160deg) scale(0.9); background-color: var(--bs-warning); }
-    60% { transform: translateX(-20px) rotateY(200deg) scale(1.1); background-color: var(--bs-danger); }
-    80% { transform: translateX(20px) rotateY(160deg) scale(0.9); background-color: var(--bs-warning); }
+    0%, 100% { transform: translateX(0) rotateY(180deg) scale(1); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-15px) rotateY(180deg) scale(1.05); }
+    20%, 40%, 60%, 80% { transform: translateX(15px) rotateY(180deg) scale(0.95); }
 }
 
 .card.mismatch {
-    animation: mismatchAnimation 1s ease-in-out;
+    animation: mismatchAnimation 0.8s ease-in-out;
 }
 
 /* Animations */
