@@ -158,11 +158,23 @@ function toggleMute() {
     }
 }
 
+function createFloatingFlowers() {
+    const container = document.querySelector('.container');
+    for (let i = 0; i < 10; i++) {
+        const flower = document.createElement('div');
+        flower.classList.add('flower');
+        flower.style.left = `${Math.random() * 100}vw`;
+        flower.style.animationDelay = `${Math.random() * 10}s`;
+        container.appendChild(flower);
+    }
+}
+
 restartButton.addEventListener('click', restartGame);
 muteButton.addEventListener('click', toggleMute);
 
 window.addEventListener('load', () => {
     backgroundMusic.play().catch(error => console.error('Error playing background music:', error));
+    createFloatingFlowers();
 });
 
 preloadImages();
