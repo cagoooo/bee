@@ -2,10 +2,12 @@ const gameBoard = document.getElementById('game-board');
 const scoreDisplay = document.getElementById('score');
 const movesDisplay = document.getElementById('moves');
 const restartButton = document.getElementById('restart');
+const toggleMusicButton = document.getElementById('toggleMusic');
 const flipSound = document.getElementById('flipSound');
 const matchSound = document.getElementById('matchSound');
 const mismatchSound = document.getElementById('mismatchSound');
 const restartSound = document.getElementById('restartSound');
+const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
 const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
@@ -15,6 +17,7 @@ let cards = [];
 let flippedCards = [];
 let score = 0;
 let moves = 0;
+let isMusicPlaying = false;
 
 function preloadImages() {
     const images = [cardBackImage, ...cardImages];
@@ -22,10 +25,6 @@ function preloadImages() {
         const img = new Image();
         img.src = `/static/images/${image}`;
     });
-    console.log('Loading audio:', '/static/audio/card-flip.mp3');
-    console.log('Loading audio:', '/static/audio/card-match.mp3');
-    console.log('Loading audio:', '/static/audio/card-mismatch.mp3');
-    console.log('Loading audio:', '/static/audio/restart.mp3');
 }
 
 function createBoard() {
@@ -46,7 +45,6 @@ function flipCard() {
         this.classList.add('flipped');
         this.style.backgroundImage = `url('/static/images/${cards[this.dataset.index]}')`;
         flippedCards.push(this);
-        console.log('Playing flip sound');
         if (flipSound) flipSound.play();
 
         if (flippedCards.length === 2) {
@@ -81,7 +79,6 @@ function checkMatch() {
 }
 
 function restartGame() {
-    console.log('Playing restart sound');
     if (restartSound) restartSound.play();
     score = 0;
     moves = 0;
@@ -90,11 +87,51 @@ function restartGame() {
     createBoard();
 }
 
+function toggleMusic() {
+    if (isMusicPlaying) {
+        fadeOutMusic();
+    } else {
+        fadeInMusic();
+    }
+    isMusicPlaying = !isMusicPlaying;
+    toggleMusicButton.textContent = isMusicPlaying ? '🔊' : '🔇';
+}
+
+function fadeInMusic() {
+    backgroundMusic.play();
+    let volume = 0;
+    const fadeInterval = setInterval(() => {
+        if (volume < 1) {
+            volume += 0.1;
+            backgroundMusic.volume = volume;
+        } else {
+            clearInterval(fadeInterval);
+        }
+    }, 100);
+}
+
+function fadeOutMusic() {
+    let volume = 1;
+    const fadeInterval = setInterval(() => {
+        if (volume > 0) {
+            volume -= 0.1;
+            backgroundMusic.volume = volume;
+        } else {
+            clearInterval(fadeInterval);
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
+        }
+    }, 100);
+}
+
 if (flipSound) flipSound.onerror = () => console.error('Error loading flip sound');
 if (matchSound) matchSound.onerror = () => console.error('Error loading match sound');
 if (mismatchSound) mismatchSound.onerror = () => console.error('Error loading mismatch sound');
 if (restartSound) restartSound.onerror = () => console.error('Error loading restart sound');
+if (backgroundMusic) backgroundMusic.onerror = () => console.error('Error loading background music');
 
 restartButton.addEventListener('click', restartGame);
+toggleMusicButton.addEventListener('click', toggleMusic);
+
 preloadImages();
 createBoard();
