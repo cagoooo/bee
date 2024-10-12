@@ -11,8 +11,8 @@ const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
-const totalCards = 20;
+const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg'];
+const totalCards = 10;
 
 let cards = [];
 let flippedCards = [];
@@ -35,7 +35,7 @@ function createBoard() {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.index = index;
-        card.dataset.pairId = Math.ceil((index + 1) / 2);
+        card.dataset.cardNumber = image.replace('card', '').replace('.jpg', '');
         
         const front = document.createElement('div');
         front.classList.add('front');
@@ -60,6 +60,9 @@ function flipCard() {
         flippedCards.push(this);
         playSound(flipSound);
 
+        // Add flip animation
+        this.style.animation = 'flipAnimation 0.6s ease-out';
+        
         if (flippedCards.length === 2) {
             moves++;
             movesDisplay.textContent = `移動次數: ${moves}`;
@@ -70,7 +73,11 @@ function flipCard() {
 
 function checkMatch() {
     const [card1, card2] = flippedCards;
-    const isMatch = card1.dataset.pairId === card2.dataset.pairId;
+    const card1Number = parseInt(card1.dataset.cardNumber);
+    const card2Number = parseInt(card2.dataset.cardNumber);
+    
+    const isMatch = (Math.min(card1Number, card2Number) % 2 === 1) && 
+                    (Math.max(card1Number, card2Number) - Math.min(card1Number, card2Number) === 1);
 
     if (isMatch) {
         playSound(matchSound);
@@ -80,6 +87,11 @@ function checkMatch() {
         scoreDisplay.textContent = `配對成功: ${score}`;
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
+        
+        // Add match animation
+        card1.style.animation = 'matchAnimation 0.5s ease-in-out';
+        card2.style.animation = 'matchAnimation 0.5s ease-in-out';
+        
         createParticles(card1);
         createParticles(card2);
         if (score === totalCards / 2) {
@@ -94,6 +106,10 @@ function checkMatch() {
         setTimeout(() => {
             card1.classList.remove('flipped', 'shake');
             card2.classList.remove('flipped', 'shake');
+            
+            // Add flip back animation
+            card1.style.animation = 'flipBackAnimation 0.6s ease-out';
+            card2.style.animation = 'flipBackAnimation 0.6s ease-out';
         }, 600);
     }
     flippedCards = [];
