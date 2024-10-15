@@ -88,8 +88,8 @@ function checkMatch() {
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         
-        card1.style.animation = 'matchAnimation 1.5s ease-in-out, matchedPulse 2s infinite';
-        card2.style.animation = 'matchAnimation 1.5s ease-in-out, matchedPulse 2s infinite';
+        card1.style.animation = 'matchAnimation 1.5s ease-in-out, glowAnimation 2s infinite';
+        card2.style.animation = 'matchAnimation 1.5s ease-in-out, glowAnimation 2s infinite';
         
         createParticles(card1);
         createParticles(card2);
@@ -106,8 +106,8 @@ function checkMatch() {
         setTimeout(() => {
             card1.classList.remove('flipped', 'mismatch');
             card2.classList.remove('flipped', 'mismatch');
-            card1.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
-            card2.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            card1.style.animation = 'shakeAnimation 0.5s ease-in-out, flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            card2.style.animation = 'shakeAnimation 0.5s ease-in-out, flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
         }, 1000);
     }
     flippedCards = [];
