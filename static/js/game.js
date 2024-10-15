@@ -94,24 +94,23 @@ function checkMatch() {
         createParticles(card1);
         createParticles(card2);
         
-        if (score === 5) {  // 5 pairs
+        if (score === totalCards / 2) {
             setTimeout(() => {
                 alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
             }, 1500);
         }
-} else {
-    // 配對失敗
-    card1.classList.add('mismatch');
-    card2.classList.add('mismatch');
-    playSound(mismatchSound);
-    setTimeout(() => {
-        card1.classList.remove('flipped', 'mismatch');
-        card2.classList.remove('flipped', 'mismatch');
-        card1.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
-        card2.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
-    }, 1000); // 給予足夠的時間來顯示 mismatch 動畫
-}
-flippedCards = [];
+    } else {
+        card1.classList.add('mismatch');
+        card2.classList.add('mismatch');
+        playSound(mismatchSound);
+        setTimeout(() => {
+            card1.classList.remove('flipped', 'mismatch');
+            card2.classList.remove('flipped', 'mismatch');
+            card1.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            card2.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+        }, 1000);
+    }
+    flippedCards = [];
 }
 
 function createParticles(card) {
@@ -227,15 +226,13 @@ preloadImages();
 createBoard();
 
 document.addEventListener('DOMContentLoaded', function() {
-    // 嘗試播放背景音樂
     playBackgroundMusic();
 });
 
 function playBackgroundMusic() {
-    backgroundMusic.volume = 0.5; // 設置音量為 50%
+    backgroundMusic.volume = 0.5;
     backgroundMusic.play().catch(error => {
         console.error('Error playing background music:', error);
-        // 如果自動播放失敗，創建一個播放按鈕（如果還沒有創建的話）
         if (!musicButtonCreated) {
             createPlayMusicButton();
         }
@@ -243,15 +240,15 @@ function playBackgroundMusic() {
 }
 
 function createPlayMusicButton() {
-    if (musicButtonCreated) return; // 如果按鈕已經創建，直接返回
+    if (musicButtonCreated) return;
     const playButton = document.createElement('button');
     playButton.textContent = '播放背景音樂';
     playButton.classList.add('btn', 'btn-primary', 'mt-2');
     playButton.addEventListener('click', () => {
         playBackgroundMusic();
         playButton.remove();
-        musicButtonCreated = false; // 重置標誌，允許再次創建按鈕
+        musicButtonCreated = false;
     });
     document.querySelector('#game-stats').appendChild(playButton);
-    musicButtonCreated = true; // 設置標誌，表示按鈕已創建
+    musicButtonCreated = true;
 }
