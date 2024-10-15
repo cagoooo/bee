@@ -26,7 +26,7 @@ body[data-level="beginner"] #game-board {
 }
 
 body[data-level="medium"] #game-board {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .card {
