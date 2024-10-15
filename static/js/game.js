@@ -19,9 +19,9 @@ const cardImages = {
 };
 
 const gameLevels = {
-    beginner: { totalCards: 10, gridColumns: 5 },
-    medium: { totalCards: 10, gridColumns: 5 },
-    advanced: { totalCards: 10, gridColumns: 5 }
+    beginner: { totalCards: 20, gridColumns: 5 },
+    medium: { totalCards: 20, gridColumns: 5 },
+    advanced: { totalCards: 20, gridColumns: 5 }
 };
 
 let { totalCards, gridColumns } = gameLevels[gameLevel];
@@ -43,7 +43,7 @@ function preloadImages() {
 function createBoard() {
     gameBoard.innerHTML = '';
     gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
-    const shuffledCards = [...cardImages[gameLevel]].sort(() => Math.random() - 0.5);
+    const shuffledCards = [...cardImages[gameLevel].slice(0, 10), ...cardImages[gameLevel].slice(0, 10)].sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -88,8 +88,7 @@ function checkMatch() {
     const card1Number = parseInt(card1.dataset.cardNumber);
     const card2Number = parseInt(card2.dataset.cardNumber);
     
-    const isMatch = Math.abs(card1Number - card2Number) === 1 &&
-                    Math.min(card1Number, card2Number) % 2 === 1;
+    const isMatch = card1.dataset.cardNumber === card2.dataset.cardNumber;
 
     if (isMatch) {
         playSound(matchSound);
