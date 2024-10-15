@@ -9,26 +9,22 @@ const matchSound = document.getElementById('matchSound');
 const mismatchSound = document.getElementById('mismatchSound');
 const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
-const timerDisplay = document.getElementById('timer');
 
 const cardBackImage = 'card-back.jpg';
 let gameLevel = document.body.dataset.level || 'beginner';
 const cardImages = {
     beginner: ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'],
     medium: ['card11.jpg', 'card12.jpg', 'card13.jpg', 'card14.jpg', 'card15.jpg', 'card16.jpg', 'card17.jpg', 'card18.jpg', 'card19.jpg', 'card20.jpg'],
-    advanced: ['card21.jpg', 'card22.jpg', 'card23.jpg', 'card24.jpg', 'card25.jpg', 'card26.jpg', 'card27.jpg', 'card28.jpg', 'card29.jpg', 'card30.jpg', 'card31.jpg', 'card32.jpg', 'card33.jpg', 'card34.jpg', 'card35.jpg']
+    advanced: ['card21.jpg', 'card22.jpg', 'card23.jpg', 'card24.jpg', 'card25.jpg', 'card26.jpg', 'card27.jpg', 'card28.jpg', 'card29.jpg', 'card30.jpg']
 };
 
 const gameLevels = {
-    beginner: { totalCards: 20, gridColumns: 5, timeLimit: Infinity },
-    medium: { totalCards: 20, gridColumns: 5, timeLimit: 120 },
-    advanced: { totalCards: 30, gridColumns: 6, timeLimit: 90 }
+    beginner: { totalCards: 20, gridColumns: 5 },
+    medium: { totalCards: 20, gridColumns: 5 },
+    advanced: { totalCards: 20, gridColumns: 5 }
 };
 
-let { totalCards, gridColumns, timeLimit } = gameLevels[gameLevel];
-let timer;
-let timeLeft;
-
+let { totalCards, gridColumns } = gameLevels[gameLevel];
 let cards = [];
 let flippedCards = [];
 let score = 0;
@@ -47,9 +43,7 @@ function preloadImages() {
 function createBoard() {
     gameBoard.innerHTML = '';
     gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
-    const shuffledCards = gameLevel === 'advanced'
-        ? [...cardImages[gameLevel], ...cardImages[gameLevel].slice(0, totalCards / 2)].sort(() => Math.random() - 0.5)
-        : [...cardImages[gameLevel].slice(0, totalCards / 2), ...cardImages[gameLevel].slice(0, totalCards / 2)].sort(() => Math.random() - 0.5);
+    const shuffledCards = [...cardImages[gameLevel].slice(0, 10), ...cardImages[gameLevel].slice(0, 10)].sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -71,10 +65,6 @@ function createBoard() {
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
     });
-    
-    if (gameLevel !== 'beginner') {
-        startTimer();
-    }
 }
 
 function flipCard() {
@@ -98,12 +88,7 @@ function checkMatch() {
     const card1Number = parseInt(card1.dataset.cardNumber);
     const card2Number = parseInt(card2.dataset.cardNumber);
     
-    const isMatch = gameLevel === 'advanced'
-        ? Math.abs(card1Number - card2Number) <= 1
-        : gameLevel === 'medium'
-            ? Math.abs(card1Number - card2Number) === 1 &&
-              Math.min(card1Number, card2Number) % 2 === 1
-            : card1.dataset.cardNumber === card2.dataset.cardNumber;
+    const isMatch = card1.dataset.cardNumber === card2.dataset.cardNumber;
 
     if (isMatch) {
         playSound(matchSound);
@@ -121,9 +106,8 @@ function checkMatch() {
         createParticles(card2);
         
         if (score === totalCards / 2) {
-            clearInterval(timer);
             setTimeout(() => {
-                alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。${gameLevel !== 'beginner' ? `剩餘時間: ${timeLeft} 秒` : ''}`);
+                alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
             }, 1500);
         }
     } else {
@@ -179,7 +163,6 @@ function restartGame() {
     moves = 0;
     scoreDisplay.textContent = '配對成功: 0';
     movesDisplay.textContent = '移動次數: 0';
-    clearInterval(timer);
     createBoard();
 }
 
@@ -237,26 +220,6 @@ function addRippleEffect(event) {
     ripple.addEventListener('animationend', () => {
         ripple.remove();
     });
-}
-
-function startTimer() {
-    timeLeft = timeLimit;
-    updateTimerDisplay();
-    timer = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            alert('時間到！遊戲結束');
-            restartGame();
-        }
-    }, 1000);
-}
-
-function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    timerDisplay.textContent = `剩餘時間: ${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
 function playBackgroundMusic() {

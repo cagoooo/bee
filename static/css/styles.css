@@ -21,16 +21,10 @@ body {
     margin: 0 auto;
 }
 
-body[data-level="beginner"] #game-board {
-    grid-template-columns: repeat(5, 1fr);
-}
-
-body[data-level="medium"] #game-board {
-    grid-template-columns: repeat(5, 1fr);
-}
-
+body[data-level="beginner"] #game-board,
+body[data-level="medium"] #game-board,
 body[data-level="advanced"] #game-board {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .card {
@@ -291,16 +285,10 @@ body[data-level="advanced"] #game-board {
 }
 
 @media (max-width: 768px) {
-    body[data-level="beginner"] #game-board {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    body[data-level="medium"] #game-board {
-        grid-template-columns: repeat(5, 1fr);
-    }
-
+    body[data-level="beginner"] #game-board,
+    body[data-level="medium"] #game-board,
     body[data-level="advanced"] #game-board {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .colorful-title {
@@ -319,7 +307,7 @@ body[data-level="advanced"] #game-board {
         font-size: 2rem;
     }
 
-    #score, #moves, #timer {
+    #score, #moves {
         font-size: 0.9rem;
     }
 
