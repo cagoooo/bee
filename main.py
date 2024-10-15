@@ -14,5 +14,9 @@ def beginner_game():
 def medium_game():
     return render_template('index.html', title='蜂勤昀友配對消消樂 - 中階', level='medium')
 
+@app.route('/advanced')
+def advanced_game():
+    return render_template('index.html', title='蜂勤昀友配對消消樂 - 高階', level='advanced')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

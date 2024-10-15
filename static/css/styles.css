@@ -29,6 +29,10 @@ body[data-level="medium"] #game-board {
     grid-template-columns: repeat(5, 1fr);
 }
 
+body[data-level="advanced"] #game-board {
+    grid-template-columns: repeat(6, 1fr);
+}
+
 .card {
     aspect-ratio: 3/4;
     background-size: cover;
@@ -295,6 +299,10 @@ body[data-level="medium"] #game-board {
         grid-template-columns: repeat(5, 1fr);
     }
 
+    body[data-level="advanced"] #game-board {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
     .colorful-title {
         font-size: 2.5rem;
     }
@@ -302,7 +310,8 @@ body[data-level="medium"] #game-board {
 
 @media (max-width: 480px) {
     body[data-level="beginner"] #game-board,
-    body[data-level="medium"] #game-board {
+    body[data-level="medium"] #game-board,
+    body[data-level="advanced"] #game-board {
         grid-template-columns: repeat(3, 1fr);
     }
 

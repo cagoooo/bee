@@ -13,13 +13,19 @@ const timerDisplay = document.getElementById('timer');
 
 const cardBackImage = 'card-back.jpg';
 let gameLevel = document.body.dataset.level || 'beginner';
-const cardImages = gameLevel === 'medium' 
-    ? ['card11.jpg', 'card12.jpg', 'card13.jpg', 'card14.jpg', 'card15.jpg', 'card16.jpg', 'card17.jpg', 'card18.jpg', 'card19.jpg', 'card20.jpg']
-    : ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
+const cardImages = {
+    beginner: ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'],
+    medium: ['card11.jpg', 'card12.jpg', 'card13.jpg', 'card14.jpg', 'card15.jpg', 'card16.jpg', 'card17.jpg', 'card18.jpg', 'card19.jpg', 'card20.jpg'],
+    advanced: ['card21.jpg', 'card22.jpg', 'card23.jpg', 'card24.jpg', 'card25.jpg', 'card26.jpg', 'card27.jpg', 'card28.jpg', 'card29.jpg', 'card30.jpg', 'card31.jpg', 'card32.jpg', 'card33.jpg', 'card34.jpg', 'card35.jpg']
+};
 
-let totalCards = gameLevel === 'beginner' ? 20 : 20;
-let gridColumns = gameLevel === 'beginner' ? 5 : 5;
-let timeLimit = gameLevel === 'beginner' ? Infinity : 120;
+const gameLevels = {
+    beginner: { totalCards: 20, gridColumns: 5, timeLimit: Infinity },
+    medium: { totalCards: 20, gridColumns: 5, timeLimit: 120 },
+    advanced: { totalCards: 30, gridColumns: 6, timeLimit: 90 }
+};
+
+let { totalCards, gridColumns, timeLimit } = gameLevels[gameLevel];
 let timer;
 let timeLeft;
 
@@ -31,7 +37,7 @@ let isMuted = false;
 let musicButtonCreated = false;
 
 function preloadImages() {
-    const images = [cardBackImage, ...cardImages];
+    const images = [cardBackImage, ...cardImages[gameLevel]];
     images.forEach((image) => {
         const img = new Image();
         img.src = `/static/images/${image}`;
@@ -41,9 +47,9 @@ function preloadImages() {
 function createBoard() {
     gameBoard.innerHTML = '';
     gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
-    const shuffledCards = gameLevel === 'medium'
-        ? [...cardImages, ...cardImages].sort(() => Math.random() - 0.5)
-        : [...cardImages.slice(0, totalCards / 2), ...cardImages.slice(0, totalCards / 2)].sort(() => Math.random() - 0.5);
+    const shuffledCards = gameLevel === 'advanced'
+        ? [...cardImages[gameLevel], ...cardImages[gameLevel].slice(0, totalCards / 2)].sort(() => Math.random() - 0.5)
+        : [...cardImages[gameLevel].slice(0, totalCards / 2), ...cardImages[gameLevel].slice(0, totalCards / 2)].sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -66,7 +72,7 @@ function createBoard() {
         gameBoard.appendChild(card);
     });
     
-    if (gameLevel === 'medium') {
+    if (gameLevel !== 'beginner') {
         startTimer();
     }
 }
@@ -92,10 +98,12 @@ function checkMatch() {
     const card1Number = parseInt(card1.dataset.cardNumber);
     const card2Number = parseInt(card2.dataset.cardNumber);
     
-    const isMatch = gameLevel === 'medium'
-        ? Math.abs(card1Number - card2Number) === 1 &&
-          Math.min(card1Number, card2Number) % 2 === 1
-        : card1.dataset.cardNumber === card2.dataset.cardNumber;
+    const isMatch = gameLevel === 'advanced'
+        ? Math.abs(card1Number - card2Number) <= 1
+        : gameLevel === 'medium'
+            ? Math.abs(card1Number - card2Number) === 1 &&
+              Math.min(card1Number, card2Number) % 2 === 1
+            : card1.dataset.cardNumber === card2.dataset.cardNumber;
 
     if (isMatch) {
         playSound(matchSound);
@@ -115,7 +123,7 @@ function checkMatch() {
         if (score === totalCards / 2) {
             clearInterval(timer);
             setTimeout(() => {
-                alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。${gameLevel === 'medium' ? `剩餘時間: ${timeLeft} 秒` : ''}`);
+                alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。${gameLevel !== 'beginner' ? `剩餘時間: ${timeLeft} 秒` : ''}`);
             }, 1500);
         }
     } else {
