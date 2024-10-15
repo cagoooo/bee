@@ -8,7 +8,11 @@ def home():
 
 @app.route('/beginner')
 def beginner_game():
-    return render_template('index.html', title='蜂勤昀友配對消消樂 - 初階')
+    return render_template('index.html', title='蜂勤昀友配對消消樂 - 初階', level='beginner')
+
+@app.route('/medium')
+def medium_game():
+    return render_template('index.html', title='蜂勤昀友配對消消樂 - 中階', level='medium')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

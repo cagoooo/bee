@@ -16,10 +16,17 @@ body {
 
 #game-board {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 2vmin;
     max-width: 90vmin;
     margin: 0 auto;
+}
+
+body[data-level="beginner"] #game-board {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+body[data-level="medium"] #game-board {
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .card {
@@ -280,8 +287,12 @@ body {
 }
 
 @media (max-width: 768px) {
-    #game-board {
+    body[data-level="beginner"] #game-board {
         grid-template-columns: repeat(4, 1fr);
+    }
+
+    body[data-level="medium"] #game-board {
+        grid-template-columns: repeat(5, 1fr);
     }
 
     .colorful-title {
@@ -290,15 +301,16 @@ body {
 }
 
 @media (max-width: 480px) {
-    #game-board {
-        grid-template-columns: repeat(2, 1fr);
+    body[data-level="beginner"] #game-board,
+    body[data-level="medium"] #game-board {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .colorful-title {
         font-size: 2rem;
     }
 
-    #score, #moves {
+    #score, #moves, #timer {
         font-size: 0.9rem;
     }
 

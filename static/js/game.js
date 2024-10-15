@@ -9,10 +9,17 @@ const matchSound = document.getElementById('matchSound');
 const mismatchSound = document.getElementById('mismatchSound');
 const restartSound = document.getElementById('restartSound');
 const backgroundMusic = document.getElementById('backgroundMusic');
+const timerDisplay = document.getElementById('timer');
 
 const cardBackImage = 'card-back.jpg';
-const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'];
-const totalCards = 10;
+const cardImages = ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg', 'card11.jpg', 'card12.jpg', 'card13.jpg', 'card14.jpg', 'card15.jpg'];
+
+let gameLevel = document.body.dataset.level || 'beginner';
+let totalCards = gameLevel === 'beginner' ? 20 : 30;
+let gridColumns = gameLevel === 'beginner' ? 5 : 6;
+let timeLimit = gameLevel === 'beginner' ? Infinity : 120;
+let timer;
+let timeLeft;
 
 let cards = [];
 let flippedCards = [];
@@ -31,7 +38,8 @@ function preloadImages() {
 
 function createBoard() {
     gameBoard.innerHTML = '';
-    const shuffledCards = [...cardImages].sort(() => Math.random() - 0.5);
+    gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
+    const shuffledCards = [...cardImages.slice(0, totalCards / 2), ...cardImages.slice(0, totalCards / 2)].sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -53,6 +61,10 @@ function createBoard() {
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
     });
+    
+    if (gameLevel === 'medium') {
+        startTimer();
+    }
 }
 
 function flipCard() {
@@ -95,8 +107,9 @@ function checkMatch() {
         createParticles(card2);
         
         if (score === totalCards / 2) {
+            clearInterval(timer);
             setTimeout(() => {
-                alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
+                alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。${gameLevel === 'medium' ? `剩餘時間: ${timeLeft} 秒` : ''}`);
             }, 1500);
         }
     } else {
@@ -152,6 +165,7 @@ function restartGame() {
     moves = 0;
     scoreDisplay.textContent = '配對成功: 0';
     movesDisplay.textContent = '移動次數: 0';
+    clearInterval(timer);
     createBoard();
 }
 
@@ -211,23 +225,25 @@ function addRippleEffect(event) {
     });
 }
 
-restartButton.addEventListener('click', (event) => {
-    addRippleEffect(event);
-    restartGame();
-});
-muteButton.addEventListener('click', toggleMute);
+function startTimer() {
+    timeLeft = timeLimit;
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            alert('時間到！遊戲結束');
+            restartGame();
+        }
+    }, 1000);
+}
 
-window.addEventListener('load', () => {
-    playBackgroundMusic();
-    createFloatingFlowers();
-});
-
-preloadImages();
-createBoard();
-
-document.addEventListener('DOMContentLoaded', function() {
-    playBackgroundMusic();
-});
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerDisplay.textContent = `剩餘時間: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
 
 function playBackgroundMusic() {
     backgroundMusic.volume = 0.5;
@@ -252,3 +268,21 @@ function createPlayMusicButton() {
     document.querySelector('#game-stats').appendChild(playButton);
     musicButtonCreated = true;
 }
+
+restartButton.addEventListener('click', (event) => {
+    addRippleEffect(event);
+    restartGame();
+});
+muteButton.addEventListener('click', toggleMute);
+
+window.addEventListener('load', () => {
+    playBackgroundMusic();
+    createFloatingFlowers();
+});
+
+preloadImages();
+createBoard();
+
+document.addEventListener('DOMContentLoaded', function() {
+    playBackgroundMusic();
+});
