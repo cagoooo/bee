@@ -43,7 +43,8 @@ function preloadImages() {
 function createBoard() {
     gameBoard.innerHTML = '';
     gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
-    const shuffledCards = [...cardImages[gameLevel].slice(0, 10), ...cardImages[gameLevel].slice(0, 10)].sort(() => Math.random() - 0.5);
+    const levelCards = cardImages[gameLevel].slice(0, 10);
+    const shuffledCards = [...levelCards, ...levelCards].sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
@@ -88,7 +89,15 @@ function checkMatch() {
     const card1Number = parseInt(card1.dataset.cardNumber);
     const card2Number = parseInt(card2.dataset.cardNumber);
     
-    const isMatch = card1.dataset.cardNumber === card2.dataset.cardNumber;
+    let isMatch = false;
+    
+    if (gameLevel === 'beginner') {
+        isMatch = Math.floor((card1Number - 1) / 2) === Math.floor((card2Number - 1) / 2);
+    } else if (gameLevel === 'medium') {
+        isMatch = Math.floor((card1Number - 11) / 2) === Math.floor((card2Number - 11) / 2);
+    } else if (gameLevel === 'advanced') {
+        isMatch = Math.floor((card1Number - 21) / 2) === Math.floor((card2Number - 21) / 2);
+    }
 
     if (isMatch) {
         playSound(matchSound);
