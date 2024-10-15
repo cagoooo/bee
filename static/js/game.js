@@ -41,6 +41,7 @@ function preloadImages() {
 }
 
 function createBoard() {
+    if (!gameBoard) return;
     gameBoard.innerHTML = '';
     gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
     const levelCards = cardImages[gameLevel].slice(0, 10);
@@ -78,7 +79,7 @@ function flipCard() {
         
         if (flippedCards.length === 2) {
             moves++;
-            movesDisplay.textContent = `移動次數: ${moves}`;
+            updateMovesDisplay();
             setTimeout(checkMatch, 600);
         }
     }
@@ -104,7 +105,7 @@ function checkMatch() {
         card1.classList.add('matched');
         card2.classList.add('matched');
         score++;
-        scoreDisplay.textContent = `配對成功: ${score}`;
+        updateScoreDisplay();
         card1.removeEventListener('click', flipCard);
         card2.removeEventListener('click', flipCard);
         
@@ -131,6 +132,18 @@ function checkMatch() {
         }, 1000);
     }
     flippedCards = [];
+}
+
+function updateScoreDisplay() {
+    if (scoreDisplay) {
+        scoreDisplay.textContent = `配對成功: ${score}`;
+    }
+}
+
+function updateMovesDisplay() {
+    if (movesDisplay) {
+        movesDisplay.textContent = `移動次數: ${moves}`;
+    }
 }
 
 function createParticles(card) {
@@ -170,8 +183,8 @@ function restartGame() {
     playSound(restartSound);
     score = 0;
     moves = 0;
-    scoreDisplay.textContent = '配對成功: 0';
-    movesDisplay.textContent = '移動次數: 0';
+    updateScoreDisplay();
+    updateMovesDisplay();
     createBoard();
 }
 
@@ -184,19 +197,22 @@ function playSound(sound) {
 
 function toggleMute() {
     isMuted = !isMuted;
-    if (isMuted) {
-        muteIcon.classList.remove('bi-volume-up-fill');
-        muteIcon.classList.add('bi-volume-mute-fill');
-        backgroundMusic.pause();
-    } else {
-        muteIcon.classList.remove('bi-volume-mute-fill');
-        muteIcon.classList.add('bi-volume-up-fill');
-        playBackgroundMusic();
+    if (muteIcon) {
+        if (isMuted) {
+            muteIcon.classList.remove('bi-volume-up-fill');
+            muteIcon.classList.add('bi-volume-mute-fill');
+            backgroundMusic.pause();
+        } else {
+            muteIcon.classList.remove('bi-volume-mute-fill');
+            muteIcon.classList.add('bi-volume-up-fill');
+            playBackgroundMusic();
+        }
     }
 }
 
 function createFloatingFlowers() {
     const container = document.querySelector('.container');
+    if (!container) return;
     for (let i = 0; i < 10; i++) {
         const flower = document.createElement('div');
         flower.classList.add('flower');
@@ -232,13 +248,15 @@ function addRippleEffect(event) {
 }
 
 function playBackgroundMusic() {
-    backgroundMusic.volume = 0.5;
-    backgroundMusic.play().catch(error => {
-        console.error('Error playing background music:', error);
-        if (!musicButtonCreated) {
-            createPlayMusicButton();
-        }
-    });
+    if (backgroundMusic) {
+        backgroundMusic.volume = 0.5;
+        backgroundMusic.play().catch(error => {
+            console.error('Error playing background music:', error);
+            if (!musicButtonCreated) {
+                createPlayMusicButton();
+            }
+        });
+    }
 }
 
 function createPlayMusicButton() {
@@ -251,15 +269,23 @@ function createPlayMusicButton() {
         playButton.remove();
         musicButtonCreated = false;
     });
-    document.querySelector('#game-stats').appendChild(playButton);
-    musicButtonCreated = true;
+    const gameStats = document.querySelector('#game-stats');
+    if (gameStats) {
+        gameStats.appendChild(playButton);
+        musicButtonCreated = true;
+    }
 }
 
-restartButton.addEventListener('click', (event) => {
-    addRippleEffect(event);
-    restartGame();
-});
-muteButton.addEventListener('click', toggleMute);
+if (restartButton) {
+    restartButton.addEventListener('click', (event) => {
+        addRippleEffect(event);
+        restartGame();
+    });
+}
+
+if (muteButton) {
+    muteButton.addEventListener('click', toggleMute);
+}
 
 window.addEventListener('load', () => {
     playBackgroundMusic();
