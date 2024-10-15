@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜂勤昀友配對消消樂 - 選擇難度</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center colorful-title">
+            <div class="title-line">
+                <span class="char1">「蜂」</span>
+                <span class="char2">勤</span>
+                <span class="char3">「昀」</span>
+                <span class="char4">友</span>
+            </div>
+            <div class="title-line">
+                <span class="char5">配</span>
+                <span class="char6">對</span>
+                <span class="char7">消</span>
+                <span class="char8">消</span>
+                <span class="char9">樂</span>
+            </div>
+        </h1>
+        <div class="text-center mt-5">
+            <h2>選擇難度</h2>
+            <div class="mt-4">
+                <a href="{{ url_for('beginner_game') }}" class="btn btn-primary btn-lg m-2">初階</a>
+                <button class="btn btn-secondary btn-lg m-2" disabled>中階 (即將推出)</button>
+                <button class="btn btn-secondary btn-lg m-2" disabled>高階 (即將推出)</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

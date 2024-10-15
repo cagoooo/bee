@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>蜂勤昀友配對消消樂</title>
+    <title>「蜂」勤「昀」友配對消消樂</title>
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
     <div class="container">
@@ -33,6 +34,7 @@
                 <button id="mute-button" class="btn btn-secondary">
                     <i class="bi bi-volume-up-fill" id="mute-icon"></i>
                 </button>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary mt-2">返回選擇難度</a>
             </div>
         </div>
     </div>

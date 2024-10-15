@@ -19,6 +19,7 @@ let flippedCards = [];
 let score = 0;
 let moves = 0;
 let isMuted = false;
+let musicButtonCreated = false;
 
 function preloadImages() {
     const images = [cardBackImage, ...cardImages];
@@ -98,16 +99,19 @@ function checkMatch() {
                 alert(`恭喜！你完成了遊戲，總共移動 ${moves} 次。`);
             }, 1500);
         }
-    } else {
-        playSound(mismatchSound);
-        card1.classList.add('mismatch');
-        card2.classList.add('mismatch');
-        setTimeout(() => {
-            card1.classList.remove('flipped', 'mismatch');
-            card2.classList.remove('flipped', 'mismatch');
-        }, 800); // Reduced from 1000ms to 800ms to match the new animation duration
-    }
-    flippedCards = [];
+} else {
+    // 配對失敗
+    card1.classList.add('mismatch');
+    card2.classList.add('mismatch');
+    playSound(mismatchSound);
+    setTimeout(() => {
+        card1.classList.remove('flipped', 'mismatch');
+        card2.classList.remove('flipped', 'mismatch');
+        card1.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+        card2.style.animation = 'flipBackAnimation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    }, 1000); // 給予足夠的時間來顯示 mismatch 動畫
+}
+flippedCards = [];
 }
 
 function createParticles(card) {
@@ -168,7 +172,7 @@ function toggleMute() {
     } else {
         muteIcon.classList.remove('bi-volume-mute-fill');
         muteIcon.classList.add('bi-volume-up-fill');
-        backgroundMusic.play().catch(error => console.error('Error playing background music:', error));
+        playBackgroundMusic();
     }
 }
 
@@ -215,9 +219,39 @@ restartButton.addEventListener('click', (event) => {
 muteButton.addEventListener('click', toggleMute);
 
 window.addEventListener('load', () => {
-    backgroundMusic.play().catch(error => console.error('Error playing background music:', error));
+    playBackgroundMusic();
     createFloatingFlowers();
 });
 
 preloadImages();
 createBoard();
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 嘗試播放背景音樂
+    playBackgroundMusic();
+});
+
+function playBackgroundMusic() {
+    backgroundMusic.volume = 0.5; // 設置音量為 50%
+    backgroundMusic.play().catch(error => {
+        console.error('Error playing background music:', error);
+        // 如果自動播放失敗，創建一個播放按鈕（如果還沒有創建的話）
+        if (!musicButtonCreated) {
+            createPlayMusicButton();
+        }
+    });
+}
+
+function createPlayMusicButton() {
+    if (musicButtonCreated) return; // 如果按鈕已經創建，直接返回
+    const playButton = document.createElement('button');
+    playButton.textContent = '播放背景音樂';
+    playButton.classList.add('btn', 'btn-primary', 'mt-2');
+    playButton.addEventListener('click', () => {
+        playBackgroundMusic();
+        playButton.remove();
+        musicButtonCreated = false; // 重置標誌，允許再次創建按鈕
+    });
+    document.querySelector('#game-stats').appendChild(playButton);
+    musicButtonCreated = true; // 設置標誌，表示按鈕已創建
+}
