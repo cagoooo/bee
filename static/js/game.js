@@ -133,12 +133,14 @@ function checkMatch() {
 }
 
 function updateScoreDisplay() {
+    const scoreDisplay = document.getElementById('score');
     if (scoreDisplay) {
         scoreDisplay.textContent = `配對成功: ${score}`;
     }
 }
 
 function updateMovesDisplay() {
+    const movesDisplay = document.getElementById('moves');
     if (movesDisplay) {
         movesDisplay.textContent = `移動次數: ${moves}`;
     }
@@ -280,6 +282,7 @@ function initializeGame() {
     createFloatingFlowers();
     playBackgroundMusic();
 
+    const restartButton = document.getElementById('restart');
     if (restartButton) {
         restartButton.addEventListener('click', (event) => {
             addRippleEffect(event);
@@ -287,23 +290,19 @@ function initializeGame() {
         });
     }
 
+    const muteButton = document.getElementById('mute-button');
     if (muteButton) {
         muteButton.addEventListener('click', toggleMute);
     }
 
-    // Initialize score and moves display
     updateScoreDisplay();
     updateMovesDisplay();
 }
 
-// Ensure the DOM is fully loaded before initializing the game
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeGame);
-} else {
+document.addEventListener('DOMContentLoaded', function() {
     initializeGame();
-}
+});
 
-// Add a global error handler to catch and log any errors
 window.addEventListener('error', function(event) {
     console.error('Caught error:', event.error);
 });
