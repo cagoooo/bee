@@ -301,15 +301,8 @@ function initializeGame() {
         muteButton.addEventListener('click', toggleMute);
     }
 
-    const scoreElement = document.getElementById('score');
-    const movesElement = document.getElementById('moves');
-
-    if (scoreElement && movesElement) {
-        updateScoreDisplay();
-        updateMovesDisplay();
-    } else {
-        console.warn('Score or moves display elements not found');
-    }
+    updateScoreDisplay();
+    updateMovesDisplay();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
