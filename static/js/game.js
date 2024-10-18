@@ -21,7 +21,7 @@ const cardImages = {
 const gameLevels = {
     beginner: { totalCards: 20, gridColumns: 5 },
     medium: { totalCards: 20, gridColumns: 5 },
-    advanced: { totalCards: 20, gridColumns: 5 }
+    advanced: { totalCards: 25, gridColumns: 5 }
 };
 
 let { totalCards, gridColumns } = gameLevels[gameLevel];
@@ -44,7 +44,7 @@ function createBoard() {
     if (!gameBoard) return;
     gameBoard.innerHTML = '';
     gameBoard.style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
-    const levelCards = cardImages[gameLevel].slice(0, 10);
+    const levelCards = cardImages[gameLevel].slice(0, totalCards / 2);
     const shuffledCards = [...levelCards, ...levelCards].sort(() => Math.random() - 0.5);
     shuffledCards.forEach((image, index) => {
         const card = document.createElement('div');
@@ -92,12 +92,10 @@ function checkMatch() {
     
     let isMatch = false;
     
-    if (gameLevel === 'beginner') {
+    if (gameLevel === 'beginner' || gameLevel === 'medium') {
         isMatch = Math.floor((card1Number - 1) / 2) === Math.floor((card2Number - 1) / 2);
-    } else if (gameLevel === 'medium') {
-        isMatch = Math.floor((card1Number - 11) / 2) === Math.floor((card2Number - 11) / 2);
     } else if (gameLevel === 'advanced') {
-        isMatch = Math.floor((card1Number - 21) / 2) === Math.floor((card2Number - 21) / 2);
+        isMatch = card1Number === card2Number;
     }
 
     if (isMatch) {

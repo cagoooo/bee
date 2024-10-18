@@ -325,3 +325,13 @@ body[data-level="advanced"] #game-board {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+.video-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+}
