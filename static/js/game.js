@@ -134,14 +134,20 @@ function checkMatch() {
 }
 
 function updateScoreDisplay() {
-    if (scoreDisplay) {
-        scoreDisplay.textContent = `配對成功: ${score}`;
+    const scoreElement = document.getElementById('score');
+    if (scoreElement) {
+        scoreElement.textContent = `配對成功: ${score}`;
+    } else {
+        console.warn('Score display element not found');
     }
 }
 
 function updateMovesDisplay() {
-    if (movesDisplay) {
-        movesDisplay.textContent = `移動次數: ${moves}`;
+    const movesElement = document.getElementById('moves');
+    if (movesElement) {
+        movesElement.textContent = `移動次數: ${moves}`;
+    } else {
+        console.warn('Moves display element not found');
     }
 }
 
@@ -295,8 +301,15 @@ function initializeGame() {
         muteButton.addEventListener('click', toggleMute);
     }
 
-    updateScoreDisplay();
-    updateMovesDisplay();
+    const scoreElement = document.getElementById('score');
+    const movesElement = document.getElementById('moves');
+
+    if (scoreElement && movesElement) {
+        updateScoreDisplay();
+        updateMovesDisplay();
+    } else {
+        console.warn('Score or moves display elements not found');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
