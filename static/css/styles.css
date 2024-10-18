@@ -399,6 +399,10 @@ body[data-level="advanced"] #game-board {
         width: 80px;
         height: 80px;
     }
+
+    .video-wrapper {
+        padding-bottom: 75%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -406,6 +410,10 @@ body[data-level="advanced"] #game-board {
         font-size: 2rem;
         width: 60px;
         height: 60px;
+    }
+
+    .video-wrapper {
+        padding-bottom: 100%;
     }
 }
 

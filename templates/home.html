@@ -56,8 +56,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         const video = document.getElementById('gameVideo');
         const playButton = document.getElementById('playButton');
+        const videoWrapper = document.querySelector('.video-wrapper');
 
-        playButton.addEventListener('click', function() {
+        function togglePlayPause() {
             if (video.paused) {
                 video.play();
                 playButton.style.display = 'none';
@@ -65,6 +66,13 @@
                 video.pause();
                 playButton.style.display = 'block';
             }
+        }
+
+        playButton.addEventListener('click', togglePlayPause);
+        video.addEventListener('click', togglePlayPause);
+        video.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            togglePlayPause();
         });
 
         video.addEventListener('play', function() {
@@ -78,6 +86,34 @@
         video.addEventListener('ended', function() {
             playButton.style.display = 'block';
         });
+
+        // Adjust video positioning
+        function adjustVideoPosition() {
+            const aspectRatio = video.videoWidth / video.videoHeight;
+            const containerWidth = videoWrapper.clientWidth;
+            const containerHeight = videoWrapper.clientHeight;
+            const containerAspectRatio = containerWidth / containerHeight;
+
+            if (aspectRatio > containerAspectRatio) {
+                const newHeight = containerWidth / aspectRatio;
+                video.style.width = '100%';
+                video.style.height = `${newHeight}px`;
+                video.style.top = `${(containerHeight - newHeight) / 2}px`;
+                video.style.left = '0';
+            } else {
+                const newWidth = containerHeight * aspectRatio;
+                video.style.width = `${newWidth}px`;
+                video.style.height = '100%';
+                video.style.top = '0';
+                video.style.left = `${(containerWidth - newWidth) / 2}px`;
+            }
+
+            // Adjust to show lower part of the video
+            video.style.objectPosition = 'center 70%';
+        }
+
+        video.addEventListener('loadedmetadata', adjustVideoPosition);
+        window.addEventListener('resize', adjustVideoPosition);
     });
     </script>
 </body>
