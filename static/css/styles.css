@@ -329,9 +329,41 @@ body[data-level="advanced"] #game-board {
 .video-container {
     max-width: 800px;
     margin: 0 auto;
+    position: relative;
 }
 
 .video-container video {
     width: 100%;
     height: auto;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+    .play-button {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .play-button {
+        font-size: 2rem;
+    }
 }
