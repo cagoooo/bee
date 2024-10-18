@@ -27,7 +27,7 @@
             </div>
         </h1>
         <div class="text-center mb-5">
-            <h2 class="mb-4">選擇難度</h2>
+            <h2 class="difficulty-title mb-4">選擇難度</h2>
             <div class="d-flex justify-content-center flex-wrap">
                 <a href="{{ url_for('beginner_game') }}" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
                     <i class="fas fa-seedling me-2"></i>初階
@@ -60,20 +60,25 @@
 
         function togglePlayPause() {
             if (video.paused) {
-                video.play();
-                playButton.style.display = 'none';
+                video.play().then(() => {
+                    playButton.style.display = 'none';
+                }).catch(error => {
+                    console.error('Error playing video:', error);
+                });
             } else {
                 video.pause();
                 playButton.style.display = 'block';
             }
         }
 
-        playButton.addEventListener('click', togglePlayPause);
-        video.addEventListener('click', togglePlayPause);
-        video.addEventListener('touchend', function(e) {
+        function handleTouchEnd(e) {
             e.preventDefault();
             togglePlayPause();
-        });
+        }
+
+        playButton.addEventListener('click', togglePlayPause);
+        video.addEventListener('click', togglePlayPause);
+        video.addEventListener('touchend', handleTouchEnd);
 
         video.addEventListener('play', function() {
             playButton.style.display = 'none';
@@ -87,25 +92,33 @@
             playButton.style.display = 'block';
         });
 
-        // Adjust video positioning
         function adjustVideoPosition() {
             const aspectRatio = video.videoWidth / video.videoHeight;
             const containerWidth = videoWrapper.clientWidth;
             const containerHeight = videoWrapper.clientHeight;
             const containerAspectRatio = containerWidth / containerHeight;
 
-            if (aspectRatio > containerAspectRatio) {
-                const newHeight = containerWidth / aspectRatio;
+            if (window.innerWidth <= 768) {
+                // For mobile devices, always show the full width
                 video.style.width = '100%';
-                video.style.height = `${newHeight}px`;
-                video.style.top = `${(containerHeight - newHeight) / 2}px`;
+                video.style.height = 'auto';
+                video.style.top = '0';
                 video.style.left = '0';
             } else {
-                const newWidth = containerHeight * aspectRatio;
-                video.style.width = `${newWidth}px`;
-                video.style.height = '100%';
-                video.style.top = '0';
-                video.style.left = `${(containerWidth - newWidth) / 2}px`;
+                // For larger screens, maintain aspect ratio
+                if (aspectRatio > containerAspectRatio) {
+                    const newHeight = containerWidth / aspectRatio;
+                    video.style.width = '100%';
+                    video.style.height = `${newHeight}px`;
+                    video.style.top = `${(containerHeight - newHeight) / 2}px`;
+                    video.style.left = '0';
+                } else {
+                    const newWidth = containerHeight * aspectRatio;
+                    video.style.width = `${newWidth}px`;
+                    video.style.height = '100%';
+                    video.style.top = '0';
+                    video.style.left = `${(containerWidth - newWidth) / 2}px`;
+                }
             }
 
             // Adjust to show lower part of the video
@@ -114,6 +127,11 @@
 
         video.addEventListener('loadedmetadata', adjustVideoPosition);
         window.addEventListener('resize', adjustVideoPosition);
+
+        // Initial call to set video position
+        if (video.readyState >= 1) {
+            adjustVideoPosition();
+        }
     });
     </script>
 </body>
