@@ -292,6 +292,15 @@ function initializeGame() {
     if (muteButton) {
         muteButton.addEventListener('click', toggleMute);
     }
+
+    // Initialize score and moves display
+    updateScoreDisplay();
+    updateMovesDisplay();
 }
 
-document.addEventListener('DOMContentLoaded', initializeGame);
+// Ensure the DOM is fully loaded before initializing the game
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeGame);
+} else {
+    initializeGame();
+}
