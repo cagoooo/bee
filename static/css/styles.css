@@ -357,6 +357,7 @@ body[data-level="advanced"] #game-board {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 70%;
 }
 
 .play-button {
@@ -456,7 +457,6 @@ body[data-level="advanced"] #game-board {
     transform: scale(1.2);
 }
 
-/* Beginner button */
 .difficulty-btn[href*="beginner"] {
     background-color: #4CAF50;
     border-color: #45a049;
@@ -466,7 +466,6 @@ body[data-level="advanced"] #game-board {
     background-color: #45a049;
 }
 
-/* Medium button */
 .difficulty-btn[href*="medium"] {
     background-color: #FFC107;
     border-color: #ffa000;
@@ -478,7 +477,6 @@ body[data-level="advanced"] #game-board {
     background-color: #ffa000;
 }
 
-/* Advanced button */
 .difficulty-btn[href*="advanced"] {
     background-color: #F44336;
     border-color: #d32f2f;
