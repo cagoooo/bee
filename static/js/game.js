@@ -91,10 +91,12 @@ function checkMatch() {
     
     let isMatch = false;
     
-    if (gameLevel === 'beginner' || gameLevel === 'medium') {
-        isMatch = Math.floor((card1Number - 1) / 2) === Math.floor((card2Number - 1) / 2);
+    if (gameLevel === 'beginner') {
+        isMatch = Math.ceil(card1Number / 2) === Math.ceil(card2Number / 2);
+    } else if (gameLevel === 'medium') {
+        isMatch = Math.ceil((card1Number - 10) / 2) === Math.ceil((card2Number - 10) / 2);
     } else if (gameLevel === 'advanced') {
-        isMatch = card1Number === card2Number;
+        isMatch = Math.ceil((card1Number - 20) / 2) === Math.ceil((card2Number - 20) / 2);
     }
 
     if (isMatch) {
@@ -132,14 +134,12 @@ function checkMatch() {
 }
 
 function updateScoreDisplay() {
-    const scoreDisplay = document.getElementById('score');
     if (scoreDisplay) {
         scoreDisplay.textContent = `配對成功: ${score}`;
     }
 }
 
 function updateMovesDisplay() {
-    const movesDisplay = document.getElementById('moves');
     if (movesDisplay) {
         movesDisplay.textContent = `移動次數: ${moves}`;
     }
@@ -284,7 +284,6 @@ function initializeGame() {
     createFloatingFlowers();
     createPlayMusicButton();
 
-    const restartButton = document.getElementById('restart');
     if (restartButton) {
         restartButton.addEventListener('click', (event) => {
             addRippleEffect(event);
@@ -292,7 +291,6 @@ function initializeGame() {
         });
     }
 
-    const muteButton = document.getElementById('mute-button');
     if (muteButton) {
         muteButton.addEventListener('click', toggleMute);
     }
