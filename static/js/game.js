@@ -304,3 +304,8 @@ if (document.readyState === 'loading') {
 } else {
     initializeGame();
 }
+
+// Add a global error handler to catch and log any errors
+window.addEventListener('error', function(event) {
+    console.error('Caught error:', event.error);
+});
