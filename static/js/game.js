@@ -276,25 +276,22 @@ function createPlayMusicButton() {
     }
 }
 
-if (restartButton) {
-    restartButton.addEventListener('click', (event) => {
-        addRippleEffect(event);
-        restartGame();
-    });
-}
-
-if (muteButton) {
-    muteButton.addEventListener('click', toggleMute);
-}
-
-window.addEventListener('load', () => {
-    playBackgroundMusic();
+function initializeGame() {
+    preloadImages();
+    createBoard();
     createFloatingFlowers();
-});
-
-preloadImages();
-createBoard();
-
-document.addEventListener('DOMContentLoaded', function() {
     playBackgroundMusic();
-});
+
+    if (restartButton) {
+        restartButton.addEventListener('click', (event) => {
+            addRippleEffect(event);
+            restartGame();
+        });
+    }
+
+    if (muteButton) {
+        muteButton.addEventListener('click', toggleMute);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initializeGame);
