@@ -15,13 +15,13 @@ let gameLevel = document.body.dataset.level || 'beginner';
 const cardImages = {
     beginner: ['card1.jpg', 'card2.jpg', 'card3.jpg', 'card4.jpg', 'card5.jpg', 'card6.jpg', 'card7.jpg', 'card8.jpg', 'card9.jpg', 'card10.jpg'],
     medium: ['card11.jpg', 'card12.jpg', 'card13.jpg', 'card14.jpg', 'card15.jpg', 'card16.jpg', 'card17.jpg', 'card18.jpg', 'card19.jpg', 'card20.jpg'],
-    advanced: ['card21.jpg', 'card22.jpg', 'card23.jpg', 'card24.jpg', 'card25.jpg', 'card26.jpg', 'card27.jpg', 'card28.jpg', 'card29.jpg', 'card30.jpg', 'card31.jpg', 'card32.jpg', 'card33.jpg']
+    advanced: ['card21.jpg', 'card22.jpg', 'card23.jpg', 'card24.jpg', 'card25.jpg', 'card26.jpg', 'card27.jpg', 'card28.jpg', 'card29.jpg', 'card30.jpg']
 };
 
 const gameLevels = {
     beginner: { totalCards: 20, gridColumns: 5 },
     medium: { totalCards: 20, gridColumns: 5 },
-    advanced: { totalCards: 25, gridColumns: 5 }
+    advanced: { totalCards: 20, gridColumns: 5 }
 };
 
 let { totalCards, gridColumns } = gameLevels[gameLevel];
@@ -30,7 +30,6 @@ let flippedCards = [];
 let score = 0;
 let moves = 0;
 let isMuted = false;
-let musicButtonCreated = false;
 
 function preloadImages() {
     const images = [cardBackImage, ...cardImages[gameLevel]];
@@ -252,27 +251,30 @@ function playBackgroundMusic() {
         backgroundMusic.volume = 0.5;
         backgroundMusic.play().catch(error => {
             console.error('Error playing background music:', error);
-            if (!musicButtonCreated) {
-                createPlayMusicButton();
-            }
+            createPlayMusicButton();
         });
     }
 }
 
 function createPlayMusicButton() {
-    if (musicButtonCreated) return;
+    const existingButton = document.getElementById('play-music-button');
+    if (existingButton) return;
+
     const playButton = document.createElement('button');
+    playButton.id = 'play-music-button';
     playButton.textContent = '播放背景音樂';
-    playButton.classList.add('btn', 'btn-primary', 'mt-2');
+    playButton.classList.add('btn', 'btn-secondary', 'mt-2', 'ms-2');
     playButton.addEventListener('click', () => {
-        playBackgroundMusic();
-        playButton.remove();
-        musicButtonCreated = false;
+        backgroundMusic.play().then(() => {
+            playButton.remove();
+        }).catch(error => {
+            console.error('Error playing background music:', error);
+        });
     });
+
     const gameStats = document.querySelector('#game-stats');
     if (gameStats) {
         gameStats.appendChild(playButton);
-        musicButtonCreated = true;
     }
 }
 
@@ -280,7 +282,7 @@ function initializeGame() {
     preloadImages();
     createBoard();
     createFloatingFlowers();
-    playBackgroundMusic();
+    createPlayMusicButton();
 
     const restartButton = document.getElementById('restart');
     if (restartButton) {
