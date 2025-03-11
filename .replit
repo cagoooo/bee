@@ -43,7 +43,8 @@ task = "shell.exec"
 args = "python static/audio/generate_restart_sound.py"
 
 [deployment]
-run = ["sh", "-c", "python main.py"]
+deploymentTarget = "cloudrun"
+run = ["sh", "-c", "npm run start"]
 
 [[ports]]
 localPort = 5000
