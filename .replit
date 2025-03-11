@@ -44,7 +44,7 @@ args = "python static/audio/generate_restart_sound.py"
 
 [deployment]
 deploymentTarget = "cloudrun"
-run = ["sh", "-c", "npm run start"]
+run = ["sh", "-c", "python main.py"]
 
 [[ports]]
 localPort = 5000
