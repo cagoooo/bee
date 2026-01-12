@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜂勤耘友配對消消樂 - 中階</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body data-level="medium">
+    <div class="container">
+        <h1 class="text-center colorful-title">
+            <div class="title-line">
+                <span class="char1">「蜂」</span>
+                <span class="char2">勤</span>
+                <span class="char3">「耘」</span>
+                <span class="char4">友</span>
+            </div>
+            <div class="title-line">
+                <span class="char5">配</span>
+                <span class="char6">對</span>
+                <span class="char7">消</span>
+                <span class="char8">消</span>
+                <span class="char9">樂</span>
+            </div>
+        </h1>
+        <div id="game-container">
+            <div id="game-board" class="mb-3"></div>
+            <div id="game-stats" class="text-center">
+                <div id="score" class="mb-2">配對成功: 0</div>
+                <div id="moves" class="mb-2">移動次數: 0</div>
+                <button id="restart" class="btn btn-primary me-2">重新開始</button>
+                <button id="mute-button" class="btn btn-secondary">
+                    <i class="bi bi-volume-up-fill" id="mute-icon"></i>
+                </button>
+                <a href="index.html" class="btn btn-secondary mt-2">返回選擇難度</a>
+            </div>
+        </div>
+    </div>
+    <audio id="flipSound" preload="auto">
+        <source src="audio/card-flip.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="matchSound" preload="auto">
+        <source src="audio/card-match.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="mismatchSound" preload="auto">
+        <source src="audio/card-mismatch.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="restartSound" preload="auto">
+        <source src="audio/restart.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="audio/background-music.mp3" type="audio/mpeg">
+    </audio>
+    <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜂勤耘友配對消消樂 - 選擇難度</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center colorful-title mb-5">
+            <div class="title-line">
+                <span class="char1">「蜂」</span>
+                <span class="char2">勤</span>
+                <span class="char3">「耘」</span>
+                <span class="char4">友</span>
+            </div>
+            <div class="title-line">
+                <span class="char5">配</span>
+                <span class="char6">對</span>
+                <span class="char7">消</span>
+                <span class="char8">消</span>
+                <span class="char9">樂</span>
+            </div>
+        </h1>
+        <div class="text-center mb-5">
+            <h2 class="difficulty-title mb-4">選擇難度</h2>
+            <div class="d-flex justify-content-center flex-wrap">
+                <a href="beginner.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
+                    <i class="fas fa-seedling me-2"></i>初階
+                </a>
+                <a href="medium.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
+                    <i class="fas fa-tree me-2"></i>中階
+                </a>
+                <a href="advanced.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
+                    <i class="fas fa-mountain me-2"></i>高階
+                </a>
+            </div>
+        </div>
+        <div class="video-container mb-5">
+            <div class="video-wrapper position-relative">
+                <video id="gameVideo" width="100%" poster="images/video-thumbnail.jpg">
+                    <source src="videos/bees.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="play-button" id="playButton">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const video = document.getElementById('gameVideo');
+        const playButton = document.getElementById('playButton');
+        const videoWrapper = document.querySelector('.video-wrapper');
+
+        function togglePlayPause() {
+            if (video.paused) {
+                video.play().then(() => {
+                    playButton.style.display = 'none';
+                }).catch(error => {
+                    console.error('Error playing video:', error);
+                });
+            } else {
+                video.pause();
+                playButton.style.display = 'block';
+            }
+        }
+
+        function handleTouchEnd(e) {
+            e.preventDefault();
+            togglePlayPause();
+        }
+
+        playButton.addEventListener('click', togglePlayPause);
+        video.addEventListener('click', togglePlayPause);
+        video.addEventListener('touchend', handleTouchEnd);
+
+        video.addEventListener('play', function() {
+            playButton.style.display = 'none';
+        });
+
+        video.addEventListener('pause', function() {
+            playButton.style.display = 'block';
+        });
+
+        video.addEventListener('ended', function() {
+            playButton.style.display = 'block';
+        });
+
+        function adjustVideoPosition() {
+            const aspectRatio = video.videoWidth / video.videoHeight;
+            const containerWidth = videoWrapper.clientWidth;
+            const containerHeight = videoWrapper.clientHeight;
+            const containerAspectRatio = containerWidth / containerHeight;
+
+            if (window.innerWidth <= 768) {
+                // For mobile devices, always show the full width
+                video.style.width = '100%';
+                video.style.height = 'auto';
+                video.style.top = '0';
+                video.style.left = '0';
+            } else {
+                // For larger screens, maintain aspect ratio
+                if (aspectRatio > containerAspectRatio) {
+                    const newHeight = containerWidth / aspectRatio;
+                    video.style.width = '100%';
+                    video.style.height = `${newHeight}px`;
+                    video.style.top = `${(containerHeight - newHeight) / 2}px`;
+                    video.style.left = '0';
+                } else {
+                    const newWidth = containerHeight * aspectRatio;
+                    video.style.width = `${newWidth}px`;
+                    video.style.height = '100%';
+                    video.style.top = '0';
+                    video.style.left = `${(containerWidth - newWidth) / 2}px`;
+                }
+            }
+
+            // Adjust to show lower part of the video
+            video.style.objectPosition = 'center 70%';
+        }
+
+        video.addEventListener('loadedmetadata', adjustVideoPosition);
+        window.addEventListener('resize', adjustVideoPosition);
+
+        // Initial call to set video position
+        if (video.readyState >= 1) {
+            adjustVideoPosition();
+        }
+    });
+    </script>
+</body>
+</html>
