@@ -2,9 +2,9 @@
 const { test, expect } = require('@playwright/test');
 
 test.describe('遊戲頁', () => {
-  test('初階載入後出現 20 張卡片', async ({ page }) => {
+  test('初階載入後出現 10 張卡片（5 對）', async ({ page }) => {
     await page.goto('/beginner.html');
-    await expect(page.locator('.card')).toHaveCount(20);
+    await expect(page.locator('.card')).toHaveCount(10);
     await expect(page.locator('#score')).toContainText('配對成功: 0');
     await expect(page.locator('#moves')).toContainText('移動次數: 0');
     await expect(page.locator('#timer')).toContainText('時間: 00:00');
