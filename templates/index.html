@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
@@ -32,7 +33,7 @@
                 <div id="moves" class="mb-2">移動次數: 0</div>
                 <button id="restart" class="btn btn-primary me-2">重新開始</button>
                 <button id="mute-button" class="btn btn-secondary">
-                    <i class="bi bi-volume-up-fill" id="mute-icon"></i>
+                    <i class="fas fa-volume-up" id="mute-icon"></i>
                 </button>
                 <a href="{{ url_for('home') }}" class="btn btn-secondary mt-2">返回選擇難度</a>
             </div>
@@ -53,11 +54,28 @@
     <audio id="backgroundMusic" loop preload="auto">
         <source src="{{ url_for('static', filename='audio/background-music.mp3') }}" type="audio/mpeg">
     </audio>
+
+    <div id="win-modal" class="win-modal" role="dialog" aria-modal="true" aria-labelledby="win-title" hidden>
+      <div class="win-modal__card">
+        <h2 id="win-title">🎉 完成！</h2>
+        <p class="win-modal__stats">
+          總共移動 <strong id="win-moves">0</strong> 次<br>
+          費時 <strong id="win-time">00:00</strong>
+        </p>
+        <p class="win-modal__best" id="win-best"></p>
+        <div class="win-modal__buttons">
+          <button id="win-again" class="btn btn-primary">再玩一次</button>
+          <a href="{{ url_for('home') }}" class="btn btn-outline-light">換難度</a>
+        </div>
+      </div>
+    </div>
+
     <footer class="site-credit">
       Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
       <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5"
          target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
     </footer>
-    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+    <script type="module" src="{{ url_for('static', filename='js/game.js') }}"></script>
 </body>
 </html>

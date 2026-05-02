@@ -10,6 +10,22 @@
 
 P0 全部 + P1 鍵盤 a11y + 完成彈窗 + 計時器 + 個人最佳紀錄。
 
+## ✅ v1.3 完成（2026-05-02 晚上）
+
+| # | 項目 | 狀態 |
+|---|---|---|
+| 中期-19 | 注音符號配對主題（聲符 1 / 聲符 2 / 韻符 共 15 對） | ✅ |
+| 中期-19 | 唐詩名句配對主題（五言短句 / 五言名句 / 七言對偶） | ✅ |
+| 中期-19 | 英文單字配對主題（動物 / 校園 / 天氣） | ✅ |
+| 中期-19 | 數字英文配對主題（1～10、整十） | ✅ |
+| 健康度-23 | Bootstrap CDN 從 cdn.replit.com 換到 jsDelivr 官方 (5.3.3) | ✅ |
+| 健康度-23 | Font Awesome 從 6.0.0-beta3 升級到 6.5.2 stable | ✅ |
+| 健康度-23 | 靜音 icon 從 `bi-volume-up-fill` 改用 FA 等價物（少載一個 CDN） | ✅ |
+| 架構-13 | game.js 拆成 6 個 ES Module（theme/audio/storage/ui/board/game） | ✅ |
+| 架構-13 | 各模組職責清晰：theme(主題+URL)、board(棋盤+配對)、ui(特效+計時+彈窗)、audio(音效)、storage(紀錄)、game(入口) | ✅ |
+| 架構-13 | 模組間透過 callback 解耦（board 完成 → game.onComplete → ui.showWinModal） | ✅ |
+| 架構-13 | SW v4 預快取 6 個 JS 模組 | ✅ |
+
 ## ✅ v1.2 完成（2026-05-02 下午）
 
 | # | 項目 | 狀態 |

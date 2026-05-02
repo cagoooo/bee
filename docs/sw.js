@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'bee-v3-2026-05-02';
+const CACHE_VERSION = 'bee-v4-2026-05-02';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -7,6 +7,11 @@ const PRECACHE_URLS = [
   './advanced.html',
   './css/styles.css',
   './js/game.js',
+  './js/theme.js',
+  './js/audio.js',
+  './js/storage.js',
+  './js/ui.js',
+  './js/board.js',
   './themes.json',
   './manifest.webmanifest',
   './favicon.ico',
