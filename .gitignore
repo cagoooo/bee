@@ -44,5 +44,9 @@ env/
 .DS_Store
 Thumbs.db
 
-# Lock files (可選，如需要版本一致性請移除此行)
-# uv.lock
+# Node / Playwright
+node_modules/
+playwright-report/
+test-results/
+.playwright/
+npm-debug.log

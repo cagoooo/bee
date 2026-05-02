@@ -1,0 +1,17 @@
+{
+  "name": "bee-memory-game",
+  "version": "1.4.0",
+  "description": "蜂勤耘友配對消消樂 — 純靜態 PWA 記憶配對遊戲",
+  "private": true,
+  "scripts": {
+    "serve": "http-server docs -p 8000 -c-1 --silent",
+    "serve:python": "python -m http.server -d docs 8000",
+    "validate:themes": "node scripts/validate-themes.js",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "http-server": "^14.1.1"
+  }
+}

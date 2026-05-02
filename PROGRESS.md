@@ -10,6 +10,22 @@
 
 P0 全部 + P1 鍵盤 a11y + 完成彈窗 + 計時器 + 個人最佳紀錄。
 
+## ✅ v1.4 完成（2026-05-02 深夜）
+
+| # | 項目 | 狀態 |
+|---|---|---|
+| C | 1200×630 OG 分享圖（漸層底 + 漂浮花朵 + 雙卡示意 + 標題） | ✅ |
+| C | scripts/generate_og.py 用 Pillow 自動產生（含 PNG + WebP 雙版本） | ✅ |
+| C | 4 個 docs HTML 的 og:image 換到新圖 + 加 og:image:width/height/alt | ✅ |
+| F | 砍掉 Flask 版（main.py、templates/、static/、build_static.py、pyproject.toml、uv.lock） | ✅ |
+| F | 砍掉 Replit 殘留（.replit、replit.nix） | ✅ |
+| F | 砍掉舊資產（generate_thumbnail.py、generated-icon.png、memory-game.html） | ✅ |
+| F | README.md 重寫反映新架構（純靜態 + ES Modules + 主題包系統） | ✅ |
+| D | Playwright E2E 測試（13 個 test）— 首頁 / 遊戲頁 / PWA / themes.json schema | ✅ |
+| D | scripts/validate-themes.js — Node.js 純 JSON schema 驗證（CI 第一關） | ✅ |
+| D | .github/workflows/ci.yml — push/PR 自動跑驗證 + Playwright | ✅ |
+| D | .gitignore 加入 node_modules / playwright artifacts | ✅ |
+
 ## ✅ v1.3 完成（2026-05-02 晚上）
 
 | # | 項目 | 狀態 |

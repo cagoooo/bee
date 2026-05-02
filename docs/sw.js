@@ -19,6 +19,7 @@ const PRECACHE_URLS = [
   './images/card-back.webp',
   './images/flower.webp',
   './images/video-thumbnail.webp',
+  './images/og-image.png',
   './audio/card-flip.mp3',
   './audio/card-match.mp3',
   './audio/card-mismatch.mp3',
