@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'bee-v1-2026-05-02';
+const CACHE_VERSION = 'bee-v3-2026-05-02';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -7,12 +7,13 @@ const PRECACHE_URLS = [
   './advanced.html',
   './css/styles.css',
   './js/game.js',
+  './themes.json',
   './manifest.webmanifest',
   './favicon.ico',
   './icon.png',
-  './images/card-back.jpg',
-  './images/flower.png',
-  './images/video-thumbnail.jpg',
+  './images/card-back.webp',
+  './images/flower.webp',
+  './images/video-thumbnail.webp',
   './audio/card-flip.mp3',
   './audio/card-match.mp3',
   './audio/card-mismatch.mp3',

@@ -60,7 +60,11 @@ body[data-level="advanced"] #game-board {
 }
 
 .card .back {
-    background-image: url('../images/card-back.jpg');
+    background-image: url('/static/images/card-back.jpg');
+    background-image: image-set(
+        url('/static/images/card-back.webp') type('image/webp'),
+        url('/static/images/card-back.jpg') type('image/jpeg')
+    );
     background-size: cover;
     background-position: center;
 }
@@ -231,7 +235,11 @@ body[data-level="advanced"] #game-board {
     position: absolute;
     width: 5vmin;
     height: 5vmin;
-    background: url('../images/flower.png') no-repeat center center / contain;
+    background: url('/static/images/flower.png') no-repeat center center / contain;
+    background-image: image-set(
+        url('/static/images/flower.webp') type('image/webp'),
+        url('/static/images/flower.png') type('image/png')
+    );
     pointer-events: none;
 }
 
@@ -506,6 +514,40 @@ body[data-level="advanced"] #game-board {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* ===== 文字卡片渲染（主題包系統） ===== */
+.card .front.card-face--text,
+.card .back.card-face--text {
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+    padding: 8px;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    word-break: break-word;
+    background-size: cover;
+}
+
+/* ===== 主題徽章（非預設主題顯示） ===== */
+.theme-badge {
+    text-align: center;
+    margin: -10px auto 18px;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border-radius: 999px;
+    display: inline-block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.theme-badge {
+    display: block;
+    width: fit-content;
+}
+.theme-badge__icon { margin-right: 4px; }
+
 /* ===== 鍵盤無障礙 focus 樣式 ===== */
 .card:focus-visible {
     outline: 3px solid #FFD700;
@@ -588,6 +630,43 @@ body[data-level="advanced"] #game-board {
     color: #fff;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
+}
+
+/* ===== 個人最佳紀錄 ===== */
+.difficulty-grid {
+    align-items: flex-start;
+}
+.difficulty-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.best-record {
+    margin-top: 4px;
+    padding: 4px 12px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    min-width: 140px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+.best-record--has-record {
+    color: #FFD700;
+    background: rgba(0, 0, 0, 0.4);
+    font-weight: 600;
+}
+.best-record strong {
+    color: #fff;
+    font-size: 1.05em;
+}
+#reset-records {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+#reset-records:hover {
+    opacity: 1;
 }
 
 /* ===== 阿凱老師頁尾署名 ===== */

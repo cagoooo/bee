@@ -18,6 +18,10 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.webmanifest">
+    <link rel="prefetch" as="image" href="images/card-back.webp">
+    <link rel="prefetch" href="beginner.html">
+    <link rel="prefetch" href="medium.html">
+    <link rel="prefetch" href="advanced.html">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -39,21 +43,43 @@
         </h1>
         <div class="text-center mb-5">
             <h2 class="difficulty-title mb-4">選擇難度</h2>
-            <div class="d-flex justify-content-center flex-wrap">
-                <a href="beginner.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
-                    <i class="fas fa-seedling me-2"></i>初階
-                </a>
-                <a href="medium.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
-                    <i class="fas fa-tree me-2"></i>中階
-                </a>
-                <a href="advanced.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
-                    <i class="fas fa-mountain me-2"></i>高階
-                </a>
+            <div class="d-flex justify-content-center flex-wrap difficulty-grid">
+                <div class="difficulty-cell">
+                    <a href="beginner.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
+                        <i class="fas fa-seedling me-2"></i>初階
+                    </a>
+                    <div class="best-record" data-level="beginner">尚未挑戰</div>
+                </div>
+                <div class="difficulty-cell">
+                    <a href="medium.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
+                        <i class="fas fa-tree me-2"></i>中階
+                    </a>
+                    <div class="best-record" data-level="medium">尚未挑戰</div>
+                </div>
+                <div class="difficulty-cell">
+                    <a href="advanced.html" class="btn btn-outline-primary btn-lg m-2 difficulty-btn">
+                        <i class="fas fa-mountain me-2"></i>高階
+                    </a>
+                    <div class="best-record" data-level="advanced">尚未挑戰</div>
+                </div>
             </div>
+            <button id="reset-records" class="btn btn-sm btn-outline-light mt-3" hidden>
+                <i class="fas fa-trash-alt me-1"></i>重置所有紀錄
+            </button>
+        </div>
+        <div class="text-center mb-4">
+            <label for="theme-select" class="text-white-50 me-2">主題包：</label>
+            <select id="theme-select" class="form-select-sm theme-select" style="display:inline-block;width:auto;">
+                <option value="bees">🐝 蜂勤耘友（預設）</option>
+                <option value="fruits-en">🍎 水果英文配對</option>
+            </select>
+            <p class="text-white-50 mt-2 mb-0" style="font-size:0.85rem;">
+                提示：選好主題後再點難度即可開始
+            </p>
         </div>
         <div class="video-container mb-5">
             <div class="video-wrapper position-relative">
-                <video id="gameVideo" width="100%" poster="images/video-thumbnail.jpg">
+                <video id="gameVideo" width="100%" poster="images/video-thumbnail.webp">
                     <source src="videos/bees.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -74,6 +100,64 @@
             navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW register failed:', err));
         });
     }
+    // Theme selector — append ?theme=xxx to difficulty links
+    (function setupThemeSelector() {
+        const sel = document.getElementById('theme-select');
+        if (!sel) return;
+        const saved = localStorage.getItem('bee-selected-theme');
+        if (saved) sel.value = saved;
+        const updateLinks = () => {
+            const t = sel.value;
+            localStorage.setItem('bee-selected-theme', t);
+            document.querySelectorAll('.difficulty-btn').forEach(a => {
+                const url = new URL(a.href, location.href);
+                if (t && t !== 'bees') url.searchParams.set('theme', t);
+                else url.searchParams.delete('theme');
+                a.href = url.pathname + (url.search || '');
+            });
+        };
+        sel.addEventListener('change', updateLinks);
+        updateLinks();
+    })();
+    // Best records on home page (per current selected theme)
+    (function renderBestRecords() {
+        const fmt = (s) => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+        const sel = document.getElementById('theme-select');
+        const render = () => {
+            const t = sel ? sel.value : 'bees';
+            let hasAny = false;
+            document.querySelectorAll('.best-record').forEach((el) => {
+                el.classList.remove('best-record--has-record');
+                el.textContent = '尚未挑戰';
+                try {
+                    let raw = localStorage.getItem(`bee-best-${t}-${el.dataset.level}`);
+                    if (!raw && t === 'bees') raw = localStorage.getItem(`bee-best-${el.dataset.level}`);
+                    if (!raw) return;
+                    const r = JSON.parse(raw);
+                    if (!r || !isFinite(r.moves) || !isFinite(r.time)) return;
+                    el.innerHTML = `🏆 最佳：<strong>${r.moves}</strong> 步 / <strong>${fmt(r.time)}</strong>`;
+                    el.classList.add('best-record--has-record');
+                    hasAny = true;
+                } catch (e) {}
+            });
+            const resetBtn = document.getElementById('reset-records');
+            if (resetBtn) resetBtn.hidden = !hasAny;
+        };
+        render();
+        if (sel) sel.addEventListener('change', render);
+        const resetBtn = document.getElementById('reset-records');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                const t = sel ? sel.value : 'bees';
+                if (!confirm(`確定要清除「${sel.options[sel.selectedIndex].text}」所有難度的最佳紀錄嗎？`)) return;
+                ['beginner','medium','advanced'].forEach(l => {
+                    localStorage.removeItem(`bee-best-${t}-${l}`);
+                    if (t === 'bees') localStorage.removeItem(`bee-best-${l}`);
+                });
+                render();
+            });
+        }
+    })();
     </script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {

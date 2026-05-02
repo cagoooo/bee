@@ -6,24 +6,29 @@
 
 ---
 
-## ✅ v1.1 本輪完成（2026-05-02）
+## ✅ v1.1 完成（2026-05-02 上午）
+
+P0 全部 + P1 鍵盤 a11y + 完成彈窗 + 計時器 + 個人最佳紀錄。
+
+## ✅ v1.2 完成（2026-05-02 下午）
 
 | # | 項目 | 狀態 |
 |---|---|---|
-| P0-1 | 阿凱老師頁尾署名（6 個 HTML 全部加上） | ✅ |
-| P0-2 | OG / Twitter Card / SEO meta（4 個 docs 頁） | ✅ |
-| P0-3 | PWA 化：`manifest.webmanifest` + `sw.js` + `icon.png` | ✅ |
-| P0-3 | Service Worker 預快取所有靜態資源（HTML / CSS / JS / 音效 / 圖片） | ✅ |
-| P0-3 | navigate 走 network-first，靜態資源走 cache-first | ✅ |
-| P0-3 | apple-touch-icon + theme-color | ✅ |
-| P1-6 | 卡片改 `role="button"` + `tabindex` + `aria-label` | ✅ |
-| P1-6 | Enter / Space 鍵翻牌 | ✅ |
-| P1-6 | `:focus-visible` 金色高亮 outline | ✅ |
-| P1-7 | 完成遊戲改用客製彈窗（取代 alert） | ✅ |
-| P1-7 | canvas-confetti 慶祝彩帶（CDN 引入） | ✅ |
-| 加碼 | 計時器（首次點卡片啟動 / 完成停止） | ✅ |
-| 加碼 | 個人最佳成績（localStorage，每難度獨立） | ✅ |
-| 加碼 | Flask 版同步加 footer + 修正路徑（兩端不打架） | ✅ |
+| P1-4 | 33 張 jpg + flower.png 全轉 WebP（quality=80），總 14MB → 7.2MB（省 50%） | ✅ |
+| P1-4 | game.js 用 canvas.toDataURL 偵測 WebP，不支援自動 fallback 到 jpg | ✅ |
+| P1-4 | CSS 用 `image-set()` 給 card-back / flower 兩種格式 | ✅ |
+| P1-5 | 三遊戲頁加 `<link rel="preload" fetchpriority="high">` 卡背 | ✅ |
+| P1-5 | 三遊戲頁加 `<link rel="prefetch">` 該關 10 張卡 | ✅ |
+| P1-5 | 首頁加 `<link rel="prefetch">` 三遊戲頁 + 卡背 | ✅ |
+| 中期-8 | 首頁顯示三難度個人最佳紀錄（🏆 最佳 X 步 / XX:XX） | ✅ |
+| 中期-8 | 「重置所有紀錄」按鈕 + 確認對話框 | ✅ |
+| 中期-9 | 主題包系統：抽出 `themes.json`，改用 `pairId` 配對 | ✅ |
+| 中期-9 | 支援圖片卡 + 文字卡（教學版核心，可做中英、注音、唐詩等） | ✅ |
+| 中期-9 | URL 參數 `?theme=xxx&level=xxx` 切換主題 / 難度 | ✅ |
+| 中期-9 | 內建第二主題「水果英文配對」示範文字卡能跑 | ✅ |
+| 中期-9 | 首頁主題下拉選單 + 自動把 `?theme=` 串到難度連結 | ✅ |
+| 中期-9 | 主題徽章（非預設主題顯示在標題下方） | ✅ |
+| 中期-9 | 個人最佳紀錄改成 `bee-best-{theme}-{level}` 格式（每主題每難度獨立） | ✅ |
 
 ---
 
