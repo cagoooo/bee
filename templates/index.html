@@ -53,6 +53,11 @@
     <audio id="backgroundMusic" loop preload="auto">
         <source src="{{ url_for('static', filename='audio/background-music.mp3') }}" type="audio/mpeg">
     </audio>
+    <footer class="site-credit">
+      Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+      <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5"
+         target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+    </footer>
     <script src="{{ url_for('static', filename='js/game.js') }}"></script>
 </body>
 </html>

@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蜂勤耘友配對消消樂 - 中階</title>
+    <meta name="description" content="蜂勤耘友配對消消樂中階關卡 — 阿凱老師開發的記憶配對遊戲。">
+    <meta name="theme-color" content="#0d6efd">
+    <meta property="og:title" content="蜂勤耘友配對消消樂 — 中階">
+    <meta property="og:description" content="一起來挑戰中階記憶配對！">
+    <meta property="og:image" content="https://cagoooo.github.io/bee/images/video-thumbnail.jpg">
+    <meta property="og:url" content="https://cagoooo.github.io/bee/medium.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_TW">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body data-level="medium">
     <div class="container">
@@ -30,6 +42,7 @@
             <div id="game-stats" class="text-center">
                 <div id="score" class="mb-2">配對成功: 0</div>
                 <div id="moves" class="mb-2">移動次數: 0</div>
+                <div id="timer" class="mb-2">時間: 00:00</div>
                 <button id="restart" class="btn btn-primary me-2">重新開始</button>
                 <button id="mute-button" class="btn btn-secondary">
                     <i class="bi bi-volume-up-fill" id="mute-icon"></i>
@@ -53,6 +66,36 @@
     <audio id="backgroundMusic" loop preload="auto">
         <source src="audio/background-music.mp3" type="audio/mpeg">
     </audio>
-    <script src="js/game.js"></script>
+
+    <div id="win-modal" class="win-modal" role="dialog" aria-modal="true" aria-labelledby="win-title" hidden>
+      <div class="win-modal__card">
+        <h2 id="win-title">🎉 完成！</h2>
+        <p class="win-modal__stats">
+          總共移動 <strong id="win-moves">0</strong> 次<br>
+          費時 <strong id="win-time">00:00</strong>
+        </p>
+        <p class="win-modal__best" id="win-best"></p>
+        <div class="win-modal__buttons">
+          <button id="win-again" class="btn btn-primary">再玩一次</button>
+          <a href="index.html" class="btn btn-outline-light">換難度</a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-credit">
+      Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+      <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5"
+         target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+    <script src="js/game.js" defer></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW register failed:', err));
+        });
+    }
+    </script>
 </body>
 </html>

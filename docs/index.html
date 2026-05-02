@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蜂勤耘友配對消消樂 - 選擇難度</title>
+    <meta name="description" content="蜂勤耘友配對消消樂 — 由阿凱老師開發的記憶配對遊戲，結合視覺、音效與動畫，三種難度任你挑戰。">
+    <meta name="theme-color" content="#0d6efd">
+    <meta property="og:title" content="蜂勤耘友配對消消樂">
+    <meta property="og:description" content="結合視覺、音效與動畫的記憶配對遊戲，三種難度等級任你挑戰！">
+    <meta property="og:image" content="https://cagoooo.github.io/bee/images/video-thumbnail.jpg">
+    <meta property="og:url" content="https://cagoooo.github.io/bee/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_TW">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -52,6 +63,18 @@
             </div>
         </div>
     </div>
+    <footer class="site-credit">
+      Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+      <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5"
+         target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+    </footer>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW register failed:', err));
+        });
+    }
+    </script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const video = document.getElementById('gameVideo');

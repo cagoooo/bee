@@ -1,0 +1,27 @@
+{
+  "name": "蜂勤耘友配對消消樂",
+  "short_name": "蜂配對",
+  "description": "結合視覺、音效與動畫的記憶配對遊戲，三種難度任你挑戰。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d6efd",
+  "theme_color": "#0d6efd",
+  "lang": "zh-Hant-TW",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["games", "education"]
+}
