@@ -1,4 +1,7 @@
 const CACHE_VERSION = 'bee-v4.1-2026-11-17';
+// 同網域（cagoooo.github.io）各工具共用快取空間，只清自己的舊快取：
+// 本站快取名稱一律是「bee-v<版本>-<日期>」格式（改版時請沿用）
+const OWN_CACHE_PATTERN = /^bee-v\d+(?:\.\d+)*-\d{4}-\d{2}-\d{2}$/;
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -41,7 +44,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(
-        keys.filter((k) => k !== CACHE_VERSION).map((k) => caches.delete(k))
+        keys.filter((k) => OWN_CACHE_PATTERN.test(k) && k !== CACHE_VERSION).map((k) => caches.delete(k))
       ))
       .then(() => self.clients.claim())
   );
