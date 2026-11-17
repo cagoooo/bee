@@ -1,6 +1,6 @@
 {
   "name": "bee-memory-game",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "蜂勤耘友配對消消樂 — 純靜態 PWA 記憶配對遊戲",
   "private": true,
   "scripts": {

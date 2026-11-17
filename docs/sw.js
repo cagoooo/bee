@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'bee-v4-2026-05-02';
+const CACHE_VERSION = 'bee-v4.1-2026-11-17';
 const PRECACHE_URLS = [
   './',
   './index.html',
