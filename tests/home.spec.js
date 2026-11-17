@@ -25,10 +25,10 @@ test.describe('首頁', () => {
     expect(href).toContain('theme=zhuyin');
   });
 
-  test('阿凱老師頁尾署名存在且連到學校頁', async ({ page }) => {
+  test('阿凱老師頁尾署名存在且連到教育科技創新專區', async ({ page }) => {
     await page.goto('/');
     const link = page.locator('.site-credit__author');
     await expect(link).toContainText('阿凱老師');
-    await expect(link).toHaveAttribute('href', /smes\.tyc\.edu\.tw/);
+    await expect(link).toHaveAttribute('href', 'https://cagoooo.github.io/Akai/');
   });
 });
